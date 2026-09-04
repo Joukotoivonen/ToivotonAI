@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<!-- saved from url=(0162)file:///C:/Users/Jouko%20Toivonen/OneDrive/Tiedostot/Teko%C3%A4ly%20&%20Johtaminen/Teko%C3%A4ly%20&%20Johtaminen%20%E2%80%94%20Viikottainen%20Katsaus03092026.html -->
+<html lang="fi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tekoäly &amp; Johtaminen — Viikottainen Katsaus</title>
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;&gt;&lt;rect width=&#39;100&#39; height=&#39;100&#39; rx=&#39;18&#39; fill=&#39;%231E2433&#39;/&gt;&lt;text y=&#39;68&#39; x=&#39;50&#39; text-anchor=&#39;middle&#39; font-size=&#39;58&#39;&gt;%F0%9F%94%AC&lt;/text&gt;&lt;/svg&gt;">
+<style>
+  :root {
+    --bg-deep:    #141820;
+    --bg-card:    #1E2433;
+    --bg-card2:   #252B3B;
+    --border:     #2E3650;
+    --text:       #E8ECF4;
+    --muted:      #8A93A8;
+    --ritala:     #3B7DD8;   /* Linssi 1 — organisatorinen oppiminen */
+    --floyd:      #5BB5A2;   /* Linssi 1b — keskijohdon rooli */
+    --kaplan:     #D4A843;   /* Linssi 2a — framing contests */
+    --hoppmann:   #C26EBF;   /* Linssi 2b — teknologinen kehystäminen */
+    --warning:    #E05C5C;
+    --success:    #5BB57A;
+    --font-ui:    'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--ritala), var(--kaplan));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .brand h1 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text);
+  }
+
+  .brand p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* ── API KEY ── */
+  .apikey-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 6px 12px;
+    transition: border-color 0.15s;
+  }
+  .apikey-wrap:focus-within { border-color: var(--ritala); }
+  .apikey-wrap label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .apikey-wrap input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    width: 200px;
+    letter-spacing: 0.5px;
+  }
+  .apikey-wrap input::placeholder { color: var(--border); }
+  .apikey-status {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  /* ── LENS PILLS ── */
+  .lens-bar {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 32px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .lens-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-right: 4px;
+  }
+
+  .lens-pill {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: none;
+    cursor: default;
+    letter-spacing: 0.1px;
+    transition: opacity 0.2s, filter 0.2s;
+  }
+
+  .lens-pill.inactive {
+    opacity: 0.28;
+    filter: grayscale(70%);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255,255,255,0.4);
+  }
+
+  .pill-1a  { background: rgba(59,125,216,0.18); color: var(--ritala); border: 1px solid rgba(59,125,216,0.35); }
+  .pill-1b  { background: rgba(91,181,162,0.18); color: var(--floyd);  border: 1px solid rgba(91,181,162,0.35); }
+  .pill-2a  { background: rgba(212,168,67,0.18); color: var(--kaplan); border: 1px solid rgba(212,168,67,0.35); }
+  .pill-2b  { background: rgba(194,110,191,0.18); color: var(--hoppmann); border: 1px solid rgba(194,110,191,0.35); }
+
+  /* ── MAIN LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: calc(100vh - 100px);
+  }
+
+  /* ── SIDEBAR ── */
+  aside {
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    padding: 24px 20px;
+    overflow-y: auto;
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 100px);
+  }
+
+  .aside-section { margin-bottom: 28px; }
+
+  .aside-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Lens cards in sidebar */
+  .lens-card {
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.15s, opacity 0.2s, filter 0.2s;
+  }
+  .lens-card:hover { border-color: var(--border); }
+  .lens-card.inactive { opacity: 0.3; filter: grayscale(60%); }
+  .lens-card.l1a { background: rgba(59,125,216,0.08); }
+  .lens-card.l1b { background: rgba(91,181,162,0.08); }
+  .lens-card.l2a { background: rgba(212,168,67,0.08); }
+  .lens-card.l2b { background: rgba(194,110,191,0.08); }
+
+  .lens-card-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 4px;
+  }
+  .lens-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .lens-card-title { font-size: 12px; font-weight: 700; }
+  .lens-card-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .lens-concepts   { font-size: 11px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* Framing dimensions mini-legend */
+  .dim-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .dim-row:last-child { border-bottom: none; }
+  .dim-badge {
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    min-width: 70px; text-align: center;
+    background: rgba(194,110,191,0.15); color: var(--hoppmann);
+  }
+  .tactic-badge {
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    min-width: 80px; text-align: center;
+    background: rgba(212,168,67,0.12); color: var(--kaplan);
+  }
+
+  /* Floyd roles */
+  .role-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .role-row:last-child { border-bottom: none; }
+  .role-badge {
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    background: rgba(91,181,162,0.15); color: var(--floyd);
+    white-space: nowrap; min-width: 96px; text-align: center;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    padding: 32px;
+    overflow-y: auto;
+  }
+
+  /* Query area */
+  .query-area {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .query-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .query-modes {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  /* ── TILANNEPAKETTI-KORTIT ── */
+  .situation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .situation-card {
+    background: var(--bg-card2);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+
+  .situation-card:hover {
+    background: var(--bg-card);
+    border-color: #4A5578;
+  }
+
+  .situation-card.active {
+    border-color: var(--ritala);
+    background: rgba(59,125,216,0.08);
+  }
+
+  .situation-card-icon { font-size: 20px; margin-bottom: 6px; }
+
+  .situation-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .situation-card-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .situation-card-lenses {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .situation-lens-tag {
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+  }
+
+  textarea {
+    width: 100%;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 14px 16px;
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  textarea:focus { border-color: var(--ritala); }
+  textarea::placeholder { color: var(--muted); }
+
+  .query-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .lens-toggles {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+
+  .lens-toggle {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    background: transparent;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    opacity: 0.5;
+  }
+  .lens-toggle.on { opacity: 1; }
+  .lt-1a { color: var(--ritala);   border-color: var(--ritala); }
+  .lt-1b { color: var(--floyd);    border-color: var(--floyd);  }
+  .lt-2a { color: var(--kaplan);   border-color: var(--kaplan); }
+  .lt-2b { color: var(--hoppmann); border-color: var(--hoppmann); }
+
+  .run-btn {
+    background: linear-gradient(135deg, var(--ritala), #5B4BD8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: opacity 0.15s;
+  }
+  .run-btn:hover { opacity: 0.88; }
+  .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .batch-add-btn {
+    background: var(--bg-card2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .batch-add-btn:hover { opacity: 0.85; }
+
+  /* ── BATCH PANEL ── */
+  .batch-panel {
+    max-width: 900px;
+    margin: 0 auto 24px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .batch-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .batch-date { font-size: 12px; font-weight: 400; color: var(--muted); }
+
+  .batch-queue-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .batch-queue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 12px;
+  }
+  .batch-queue-item .bq-meta { color: var(--muted); }
+  .batch-queue-item .bq-remove {
+    background: none; border: none; color: var(--warning);
+    cursor: pointer; font-size: 13px; padding: 2px 6px;
+  }
+  .batch-empty-hint { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  .batch-actions {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .batch-submit-btn {
+    background: linear-gradient(135deg, var(--kaplan), #B8860B);
+    color: #fff; border: none; border-radius: 8px;
+    padding: 9px 18px; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .batch-submit-btn:hover { opacity: 0.88; }
+  .batch-submit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .batch-status-text { font-size: 12px; color: var(--muted); }
+
+  .batch-results-list { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .batch-result-item {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    padding: 10px 12px; background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: 7px; font-size: 12px;
+  }
+  .batch-result-item .br-view-btn {
+    background: var(--ritala); color: #fff; border: none; border-radius: 6px;
+    padding: 5px 12px; font-size: 11px; font-weight: 700; cursor: pointer;
+  }
+  .batch-result-item.errored { border-color: var(--warning); }
+  .batch-result-item .br-error { color: var(--warning); }
+
+  /* ── RESPONSE AREA ── */
+  .response-area { display: none; }
+  .response-area.visible { display: block; }
+
+  .loading-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--ritala);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-steps {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .loading-step {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .loading-step.done { color: var(--success); }
+  .loading-step .step-icon { font-size: 14px; }
+
+  /* Section cards */
+  .section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-header:hover { background: var(--bg-card2); }
+
+  .section-meta {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    min-width: 26px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .section-lenses {
+    display: flex; gap: 5px;
+  }
+
+  .mini-pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .section-toggle { color: var(--muted); font-size: 14px; transition: transform 0.2s; }
+  .section-toggle.open { transform: rotate(180deg); }
+
+  .section-body {
+    padding: 20px;
+    display: none;
+  }
+  .section-body.open { display: block; }
+
+  /* Analysis blocks within sections */
+  .analysis-block {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .analysis-block:last-child { margin-bottom: 0; }
+
+  .block-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Concept tags inline */
+  .concept-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.07);
+    color: #CBD2E0;
+    margin: 0 1px;
+  }
+
+  .tag-1a { background: rgba(59,125,216,0.15); color: var(--ritala); }
+  .tag-1b { background: rgba(91,181,162,0.15); color: var(--floyd); }
+  .tag-2a { background: rgba(212,168,67,0.15); color: var(--kaplan); }
+  .tag-2b { background: rgba(194,110,191,0.15); color: var(--hoppmann); }
+
+  /* Warning / concern block */
+  .concern-block {
+    border-left: 3px solid var(--success);
+    background: rgba(91,181,122,0.06);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+
+  .concern-block.misread {
+    border-left-color: var(--warning);
+    background: rgba(224,92,92,0.06);
+  }
+
+  .concern-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; margin-bottom: 6px;
+  }
+
+  /* Weak signals */
+  .signal-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .signal-row:last-child { border-bottom: none; }
+  .signal-num {
+    font-size: 20px; font-weight: 900;
+    font-family: var(--font-mono);
+    color: var(--border);
+    min-width: 28px;
+    line-height: 1.4;
+  }
+
+  /* Sources */
+  .source-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .source-item:last-child { border-bottom: none; }
+  .source-type {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 3px;
+    white-space: nowrap; align-self: center;
+    background: rgba(255,255,255,0.07); color: var(--muted);
+  }
+  .source-link { color: var(--ritala); text-decoration: none; }
+  .source-link:hover { text-decoration: underline; }
+
+  /* Factsheet button */
+  .factsheet-btn {
+    background: transparent;
+    border: 1px solid var(--kaplan);
+    color: var(--kaplan);
+    border-radius: 7px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 7px;
+    transition: background 0.15s;
+    margin-top: 8px;
+  }
+  .factsheet-btn:hover { background: rgba(212,168,67,0.1); }
+  .factsheet-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Error */
+  .error-card {
+    background: rgba(224,92,92,0.08);
+    border: 1px solid rgba(224,92,92,0.3);
+    border-radius: 10px;
+    padding: 20px;
+    color: var(--warning);
+    font-size: 14px;
+  }
+
+  /* Scrollbar — näkyvä tummalla taustalla */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #1E2433; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: #4A5578; border-radius: 4px; border: 2px solid #1E2433; }
+  ::-webkit-scrollbar-thumb:hover { background: #6B7AA8; }
+  * { scrollbar-width: thin; scrollbar-color: #4A5578 #1E2433; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+    main { padding: 20px 16px; }
+    header { padding: 14px 16px; }
+    .lens-bar { padding: 10px 16px; }
+  }
+
+  /* ══ TULOSTUS / PDF (Ctrl-P) ══
+     Piilotetaan kaikki UI-elementit ja näytetään vain analyysin tulokset
+     siistissä valkoisessa asettelussa. */
+  @media print {
+    /* Pakotetaan valkea tausta — tumma teema ei tulostu hyvin */
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    body { background: #fff !important; color: #111 !important; font-family: 'Calibri', 'Georgia', serif; }
+
+    /* Piilota kaikki UI-osat paitsi vastausnäkymä */
+    header, .lens-bar, aside, .query-area, .batch-panel,
+    .situation-grid, #batchPanel, #batchAddBtn, #globalFactsheetBtn,
+    .run-btn, .query-footer, .loading-card { display: none !important; }
+
+    /* Layout: koko leveys ilman sivupalkkia */
+    .layout { display: block !important; }
+    main { padding: 0 !important; max-width: 100% !important; }
+
+    /* Vastausnäkymä */
+    .response-area {
+      background: #fff !important;
+      border: none !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+
+    /* Analyysin otsikot */
+    .response-header {
+      background: #fff !important;
+      border-bottom: 2pt solid #1DB8A0 !important;
+      color: #111 !important;
+      padding: 0 0 8pt 0 !important;
+      margin-bottom: 16pt !important;
+    }
+
+    /* Osiolaatikot */
+    .section-card {
+      background: #fff !important;
+      border: 1pt solid #ccc !important;
+      border-radius: 0 !important;
+      margin-bottom: 12pt !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* Linssitagit — näytetään värillisinä tai tekstinä */
+    .lens-tag-inline, .section-lens-badge {
+      border: 1pt solid #999 !important;
+      background: #f5f5f5 !important;
+      color: #333 !important;
+      padding: 1pt 4pt !important;
+      font-size: 7pt !important;
+    }
+
+    /* Pilotetaan toggle-nuoli — kaikki osiot auki tulostuksessa */
+    .section-toggle { display: none !important; }
+    .section-body { display: block !important; max-height: none !important; overflow: visible !important; }
+
+    /* Role/tactic/dim badget */
+    .role-badge, .tactic-badge, .dim-badge {
+      border: 1pt solid #999 !important;
+      background: #eee !important;
+      color: #222 !important;
+    }
+
+    /* Sivunumerot ja marginaalit */
+    @page {
+      margin: 2cm 2.5cm;
+      size: A4;
+    }
+    @page :first {
+      margin-top: 1.5cm;
+    }
+
+    /* Ylätunniste tulostukseen */
+    .response-area::before {
+      content: 'Tekoäly & Johtaminen — Ajankohtaiskatsaus';
+      display: block;
+      font-size: 8pt;
+      color: #888;
+      border-bottom: 1pt solid #ddd;
+      padding-bottom: 4pt;
+      margin-bottom: 12pt;
+      letter-spacing: 0.5pt;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">🔬</div>
+    <div>
+      <h1>Tekoäly &amp; Johtaminen</h1>
+      <p>Ajankohtaiskatsaus</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div class="apikey-wrap">
+      <label for="apiKeyInput">API-avain</label>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+      <span class="apikey-status" id="apiKeyStatus" title="Avain asetettu">🟢</span>
+    </div>
+    <button class="factsheet-btn" id="globalFactsheetBtn">
+      📄 Vie Factsheet (.docx)
+    </button>
+  </div>
+</header>
+
+<div class="lens-bar">
+  <span class="lens-label">Aktiiviset linssit:</span>
+  <span class="lens-pill pill-1a" id="bar-1a">✓ Org. oppiminen</span>
+  <span class="lens-pill pill-1b" id="bar-1b">✓ Keskijohto</span>
+  <span class="lens-pill pill-2a" id="bar-2a">✓ Kilpailevat kehykset</span>
+  <span class="lens-pill pill-2b" id="bar-2b">✓ Teknol. kehystäminen</span>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside>
+
+    <div class="aside-section">
+      <div class="aside-title">Linssit &amp; käsitteet</div>
+
+      <div class="lens-card l1a" id="card-1a">
+        <div class="lens-card-header">
+          <div class="lens-dot" style="background:var(--ritala)"></div>
+          <div class="lens-card-title" style="color:var(--ritala)">Organisatorinen oppiminen</div>
+        </div>
+        <div class="lens-card-sub">AI-kyvykkyyksien kehittyminen organisaatiossa</div>
+        <div class="lens-concepts">havaintoperäiset laukaisimet · toiminnalliset laukaisimet · viestintäkäytännöt · rakenteelliset käytännöt · uutta etsivä / olemassaolevaa hyödyntävä oppiminen</div>
+      </div>
+
+      <div class="lens-card l1b" id="card-1b">
+        <div class="lens-card-header">
+          <div class="lens-dot" style="background:var(--floyd)"></div>
+          <div class="lens-card-title" style="color:var(--floyd)">Keskijohdon rooli</div>
+        </div>
+        <div class="lens-card-sub">Strateginen rooli muutoksessa <em>(pääpaino)</em></div>
+        <div class="lens-concepts">puolestapuhuminen · synteesin kokoaminen · sopeutumiskyvyn edistäminen · toimeenpano · merkityksellistäminen · merkityksen välittäminen · aloitteen markkinointi johdolle</div>
+      </div>
+
+      <div class="lens-card l2a" id="card-2a">
+        <div class="lens-card-header">
+          <div class="lens-dot" style="background:var(--kaplan)"></div>
+          <div class="lens-card-title" style="color:var(--kaplan)">Kilpailevat kehykset</div>
+        </div>
+        <div class="lens-card-sub">Kognitiiviset kehykset ja legitimiteettitaistelut</div>
+        <div class="lens-concepts">kognitiiviset kehykset · kehyksen resonanssi · legitimiteettitaistelut · diagnostinen kehys · prognostinen kehys · diskursiiviset mahdollisuudet</div>
+      </div>
+
+      <div class="lens-card l2b" id="card-2b">
+        <div class="lens-card-header">
+          <div class="lens-dot" style="background:var(--hoppmann)"></div>
+          <div class="lens-card-title" style="color:var(--hoppmann)">Teknologian kehystäminen</div>
+        </div>
+        <div class="lens-card-sub">Strateginen teknologiakehystäminen</div>
+        <div class="lens-concepts">teknologian strateginen kehystäminen · kehystämisen ulottuvuudet · kehystämistaktiikat · teknologian kypsyys · sidosryhmien odotukset</div>
+      </div>
+    </div>
+
+    <div class="aside-section">
+      <div class="aside-title">Kehystämisdimensiot</div>
+      <div class="dim-row"><span class="dim-badge">Potentiaali</span> Hypoteettinen suorituskyky tulevaisuudessa</div>
+      <div class="dim-row"><span class="dim-badge">Näkymä</span> Ennustettu kehitys tietyssä aikaikkunassa</div>
+      <div class="dim-row"><span class="dim-badge">Suorituskyky</span> Nykyinen mitattavissa oleva suorituskyky</div>
+      <div class="dim-row"><span class="dim-badge">Kehityskaari</span> Kehityskaari suhteessa aiempaan</div>
+    </div>
+
+    <div class="aside-section">
+      <div class="aside-title">Kehystämistaktiikat</div>
+      <div class="dim-row"><span class="tactic-badge">Johtopäätös</span> Kausaalinen johtopäätös dimensiosta toiseen</div>
+      <div class="dim-row"><span class="tactic-badge">Ehdollistaminen</span> "Kunhan X toteutuu, Y seuraa"</div>
+      <div class="dim-row"><span class="tactic-badge">Myönnytys</span> Myönnetään heikkous, korostetaan vahvuutta</div>
+    </div>
+
+    <div class="aside-section">
+      <div class="aside-title">Keskijohdon roolit</div>
+      <div class="role-row"><span class="role-badge">Puolestapuhuminen</span> Ajaa aloitteen ylöspäin johdolle</div>
+      <div class="role-row"><span class="role-badge">Synteesin kokoaminen</span> Koostaa hajanaisen tiedon ymmärrettäväksi</div>
+      <div class="role-row"><span class="role-badge">Fasilitointi</span> Suojelee kokeilutilaa tiimeissä</div>
+      <div class="role-row"><span class="role-badge">Toimeenpano</span> Muuttaa strategian arjen käytännöiksi</div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- QUERY -->
+    <div class="query-area">
+      <div class="query-label">Valitse tilanne</div>
+
+      <div class="situation-grid">
+
+        <button class="situation-card active" data-situation="weekly" data-lenses="1a,1b,2a,2b">
+          <div class="situation-card-icon">📅</div>
+          <div class="situation-card-title">Viikon katsaus</div>
+          <div class="situation-card-desc">Artikkeli, uutinen tai raportti tekoälyn johtamisesta</div>
+          <div class="situation-card-lenses">
+            <span class="situation-lens-tag pill-1a">Oppiminen</span>
+            <span class="situation-lens-tag pill-1b">Keskijohto</span>
+            <span class="situation-lens-tag pill-2a">Kehykset</span>
+            <span class="situation-lens-tag pill-2b">Teknologia</span>
+          </div>
+        </button>
+
+        <button class="situation-card" data-situation="leader" data-lenses="1b,2a,2b">
+          <div class="situation-card-icon">🎙️</div>
+          <div class="situation-card-title">Johtaja viestii</div>
+          <div class="situation-card-desc">Puhe, haastattelu, kannanotto tai some-viesti</div>
+          <div class="situation-card-lenses">
+            <span class="situation-lens-tag pill-1b">Keskijohto</span>
+            <span class="situation-lens-tag pill-2a">Kehykset</span>
+            <span class="situation-lens-tag pill-2b">Teknologia</span>
+          </div>
+        </button>
+
+        <button class="situation-card" data-situation="org" data-lenses="1a,1b">
+          <div class="situation-card-icon">🏗️</div>
+          <div class="situation-card-title">Organisaatio muuttuu</div>
+          <div class="situation-card-desc">Strategia, rakenne, käyttöönotto tai muutoshanke</div>
+          <div class="situation-card-lenses">
+            <span class="situation-lens-tag pill-1a">Oppiminen</span>
+            <span class="situation-lens-tag pill-1b">Keskijohto</span>
+          </div>
+        </button>
+
+        <button class="situation-card" data-situation="concern" data-lenses="1b,2a">
+          <div class="situation-card-icon">🛡️</div>
+          <div class="situation-card-title">Huoli tai kritiikki</div>
+          <div class="situation-card-desc">Epävarmuus, vastarinta tai kriittinen kysymys AI:sta</div>
+          <div class="situation-card-lenses">
+            <span class="situation-lens-tag pill-1b">Keskijohto</span>
+            <span class="situation-lens-tag pill-2a">Kehykset</span>
+          </div>
+        </button>
+
+      </div>
+
+      <div class="query-label">Syötä materiaali tai kysymys</div>
+      <textarea id="queryInput" placeholder="Liitä tähän artikkeli, uutinen, puhe, organisaation viesti tai muu materiaali — tai kuvaile tilanne omin sanoin."></textarea>
+
+      <div class="query-footer">
+        <div style="font-size:12px; color:var(--muted);" id="activeLensesLabel">
+          Aktiiviset linssit: <span id="activeLensesText">Oppiminen · Keskijohto · Kehykset · Teknologia</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="run-btn batch-add-btn" id="batchAddBtn" title="Lisää tämä analyysi päivän erään sen sijaan että ajat sen heti">
+            <span>🗂️ Lisää päivän erään</span>
+          </button>
+          <button class="run-btn" id="runBtn"><span>▶ Analysoi</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCH PANEL -->
+    <div class="batch-panel" id="batchPanel" style="display:none;">
+      <div class="batch-panel-header">
+        <span>🗂️ Päivän erä (Batch API — ei-reaaliaikainen, 1 erä / päivä)</span>
+        <span class="batch-date" id="batchDateLabel"></span>
+      </div>
+      <div class="batch-queue-list" id="batchQueueList"></div>
+      <div class="batch-actions">
+        <button class="batch-submit-btn" id="submitBatchBtn" disabled="">📤 Lähetä päivän erä</button>
+        <span class="batch-status-text" id="batchStatusText"></span>
+      </div>
+      <div class="batch-results-list" id="batchResultsList"></div>
+    </div>
+
+    <!-- RESPONSE -->
+    <div class="response-area visible" id="responseArea"><div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <div>
+      <div style="font-size:18px; font-weight:800;">Viikko 36/2026 — Tekoäly johtamisessa: skaalauksen kriittinen hetki</div>
+      <div style="font-size:12px; color:var(--muted); margin-top:2px;">perjantaina 4. syyskuuta 2026</div>
+    </div>
+    <button class="factsheet-btn" onclick="generateFactsheet()" id="factsheetBtn2">📄 Vie Factsheet (.docx)</button>
+  </div><div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">01</span>
+          <span class="section-title">Suomalainen Spotlight</span>
+          <div class="section-lenses"><span class="lens-pill mini-pill pill-1a" style="font-size:10px; padding:2px 8px;">Oppiminen</span><span class="lens-pill mini-pill pill-1b" style="font-size:10px; padding:2px 8px;">Keskijohto</span></div>
+        </div>
+        <span class="section-toggle open">▼</span>
+      </div>
+      <div class="section-body open"><div class="analysis-block">
+        <div style="margin-bottom:10px;"><span class="concept-tag">havaintoperäiset laukaisimet</span> <span class="concept-tag">toiminnalliset laukaisimet</span> <span class="concept-tag">uutta etsivä oppiminen</span> <span class="concept-tag">olemassaolevaa hyödyntävä oppiminen</span> <span class="concept-tag">synteesin kokoaminen</span> <span class="concept-tag">viestintäkäytännöt</span></div>
+        Haaga-Helian elokuussa 2026 julkaisema tietokirja 'Kone johtajana – Tekoäly asiantuntija- ja tietotyön johtamisessa' (Lahtinen, Tuomi, Kauttonen, Vuori &amp; Asikainen, 2026) tarjoaa tällä viikolla terävimmän suomalaisen havaintoperäisen laukaistimen: jopa 49 % suomalaisista tieto- ja asiantuntijatyötä tekevistä on jo kohdannut tilanteen, jossa tekoäly jakaa työtehtäviä, arvioi suoritusta tai antaa palautetta ihmisen sijaan (Helsingin Uutiset, 17.8.2026). Kyseessä on merkittävä havaintoperäinen laukaistin (Ritala ym. 2024) — algoritminen johtaminen on siirtynyt tutkijoiden paperien sivuilta arkipäivän johtamistilanteisiin.
+
+Samaan aikaan Liftedin Suuri johtoryhmätutkimus 2026 osoittaa, että yli puolet johtoryhmien jäsenistä ei pidä tekoälyä osana yhteistä työskentelyä, ja tekoälyn sekä datan hyödyntäminen saa johtoryhmissä heikointa arviota — vaikka 39 % organisaatioista jää kaikista keskeisistä liiketoimintatavoitteistaan (Salkunrakentaja, 16.5.2026). Tämä on toiminnallinen laukaistin: tekoäly ei ole enää abstrakti uhka tai lupaus, vaan suoraan mitattava johtamisen kehittämiskysymys.
+
+Ritalan (2024) käsittein Suomi elää samanaikaisesti kahdessa oppimistilassa: edelläkävijäyrityksillä (AI Finland 2026 mukaan edistyneiden yritysten osuus on yli nelinkertaistunut kahdessa vuodessa) on käynnissä uutta etsivä oppiminen — kokeilu, skaalaus ja tuotteistaminen — kun taas yli puolet organisaatioista on edelleen olemassaolevaa hyödyntävässä vaiheessa, jossa tekoäly rajautuu yksittäisiin prosessipisteytyksiin.
+
+Viestintäkäytäntöjen näkökulmasta Haaga-Helian 'Kone johtajana' -kirja itsessään on merkittävä formaali viestintäkäytäntö: se koostaa hajanaisen tutkimustiedon yhdeksi yhteiseksi kehykseksi, joka siirtyy ammattilaisyhteisöön tietokirjaformaatin kautta. Tämä on siltalinkki Floyd &amp; Lanen (2000) synteesin kokoamisen rooliin: tutkijat tekevät työn, jota organisaatioiden oman keskijohdon pitäisi tehdä sisäisesti — muuntaa hajanainen AI-kokemus ymmärrettäväksi kokonaisuudeksi. Kysymys kuuluu: onko suomalaisilla organisaatioilla rakenne, jossa tuo synteesi tapahtuu myös sisällä?
+      </div><div style="font-size:12px; color:var(--muted); margin-top:6px;">📎 Lähde: <a href="https://www.helsinginuutiset.fi/paikalliset/9706855" target="_blank" class="source-link">Kone johtajana – Haaga-Helia / Helsingin Uutiset (17.8.2026)</a></div></div>
+    </div><div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">02</span>
+          <span class="section-title">Keskijohdon kehystämistoimet</span>
+          <div class="section-lenses"><span class="lens-pill mini-pill pill-1b" style="font-size:10px; padding:2px 8px;">Keskijohto</span></div>
+        </div>
+        <span class="section-toggle open">▼</span>
+      </div>
+      <div class="section-body open">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+          <div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Rooli keskijohdossa</div><span class="role-badge">synteesin kokoaminen</span></div>
+          <div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Tapaustaktiikka</div><span class="tactic-badge">ehdollistaminen</span></div>
+          <div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Dimensiot</div><div style="display:flex; gap:4px;"><span class="dim-badge">potentiaali</span><span class="dim-badge">nykysuorituskyky</span><span class="dim-badge">kehityskaari</span></div></div>
+          <div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Tulos</div><span style="font-size:12px; font-weight:700; padding:3px 9px; border-radius:5px; background:rgba(224,92,92,0.15); color:var(--warning);">✗ Epäonnistui</span></div>
+        </div>
+        <div class="analysis-block">OP Pohjola–Accenture–Noren -tutkimus (julkaistu 29.5.2026, aineistonkeruu 12/2025–3/2026, 118 johtajaa + 18 syvähaastattelu) tarjoaa tämän viikon terävimmän näkökulman keskijohdon rooliin. Tutkimuksen johtopäätös on suora: organisaatioiden tulee 'empoweroida keskijohto, investoida hallintoon ja prosessien uudelleensuunnitteluun sekä tehdä kokeilusta toistettavaa' (OP Pohjola 2026).
+
+Tutkimus paljastaa kuitenkin syvän rakenteellisen jännitteen: vain 11 % suomalaisista yrityksistä käyttää tekoälyä strategisesti, ja lähes 89 % epäonnistuu hyödyntämään teknologiaa selkeällä strategisella fokuksella asiakastarpeiden täyttämiseksi (Computer Weekly, 26.6.2026). Tämä on Floyd &amp; Lanen (2000) toimeenpanon ongelma: strategiset päätökset eivät muutu arjen käytännöiksi.
+
+Keskijohdon diskursiivinen kompetenssi nousee kriittiseksi. Kun 38 % suomalaisyrityksistä käyttää tekoälyä, mutta vain 15 %:lla on dokumentoidut ohjeet ja käytännöt (Tilastokeskus, via AI Sanomat 3/2026), on käynnissä klassinen synteesin kokoamisen ongelma: tekoälykokemukset leijuvat yksilötasolla ilman organisatorista kokoamista. Kukaan ei rakenna siltaa yksittäisen chatbot-käytön ja strategisen arvonluonnin välille.
+
+Hoppmannin (2020) kehystämisdimensioista käytännössä käytetään tällä hetkellä lähes yksinomaan nykysuorituskykyä ('olemme ottaneet käyttöön Copilotin') ja potentiaalia ('tekoäly parantaa tuottavuutta') — kehityskaari jää artikuloimatta. Taktiikka on ehdollistaminen: AI tuo hyötyä, jos ja kun organisaatio osaa skaalata kokeilut tuotantoon. Tämä taktiikka välittyy viestintäkäytänteissä erityisesti konsulttiraporttien, sisäisten strategiaseminaarien ja johtoryhmäkokousten kautta — ei arjen tiimipalaverien.
+
+Miksi onnistuminen on tällä hetkellä rajallista: OP Pohjola -tutkimuksen mukaan merkittävä este on se, ettei kokeilusta ole tehty toistettavaa (rakenteelliset käytännöt puuttuvat, Ritala 2024). Sopeutumiskyvyn fasilitointi (Floyd &amp; Lane) vaatisi suojatun kokeilutilan, jossa keskijohto voi aktiivisesti testata ja oppia ilman välitöntä tulosvastuuta — mutta Suomen tekoälykypsyysmittauksissa (OAMK Journal 5/2026) kulttuuri ja asenne ovat parhaiten kehittynyt ulottuvuus, kun taas rakenteet ja prosessit jäävät jälkeen.</div>
+        <div style="font-size:13px; color:var(--muted); font-style:italic; margin-top:8px; padding: 8px 12px; border-left:2px solid var(--border);">Vain 11 % yrityksistä käyttää tekoälyä strategisesti (OP Pohjola–Accenture 2026). Rakenteellisten käytäntöjen (Ritala 2024) puute estää kokeilujen skaalauksen. Keskijohdon merkityksen välittäminen on heikkoa: tekoälykokemuksia ei koosteta systemaattisesti, eikä formaaleja viestintäkäytäntöjä ole rakennettu tukemaan oppimisen leviämistä.</div></div>
+    </div><div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">03</span>
+          <span class="section-title">Kilpailevien kehysten -radar</span>
+          <div class="section-lenses"><span class="lens-pill mini-pill pill-2a" style="font-size:10px; padding:2px 8px;">Kehykset</span><span class="lens-pill mini-pill pill-2b" style="font-size:10px; padding:2px 8px;">Teknologia</span></div>
+        </div>
+        <span class="section-toggle open">▼</span>
+      </div>
+      <div class="section-body open"><div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:10px; margin-bottom:14px;"><div style="background:var(--bg-deep); border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--kaplan); margin-bottom:4px;">Tehokkuuskehys</div>
+            <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Omistaja: Hallitukset ja ylin johto (Deloitte/DIF 2026)</div>
+            <div style="font-size:13px;">Tekoäly on ennen kaikkea tehokkuus- ja tuottavuustyökalu. Kaksi kolmesta suomalaisesta hallituksen jäsenestä kokee, että organisaatiossa on saavutettu merkittäviä tehokkuushyötyjä — mutta liiketoiminnan kasvu puuttuu (Deloitte/DIF, 6/2026). Tämä on diagnostinen kehys: tunnistaa nykytila, mutta ei tarjoa etenemispolkua. Kehys resonoi johdolle, koska se on mitattavissa (kustannussäästöt, prosessiajat). Hoppmannin (2020) dimensioista käytetään nykysuorituskykyä, taktiikkana myönnytys: 'kyllä, tekoäly tuo tehokkuutta, mutta kasvu on vielä auki'.</div>
+          </div><div style="background:var(--bg-deep); border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--kaplan); margin-bottom:4px;">Strategisen transformaation kehys</div>
+            <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Omistaja: AI Finland, Demos Helsinki, teknologiasektori</div>
+            <div style="font-size:13px;">Suomi on ohittanut kokeiluvaiheen — nyt on skaalauksen aika. Edistyneiden yritysten osuus on nelinkertaistunut kahdessa vuodessa (AI Finland 2026). Kehys käyttää Hoppmannin (2020) kehityskaarta ja potentiaalia: tekoälyn kypsyys on saavutettu edelläkävijöissä, muiden on kiihdytettävä. Tämä on prognostinen kehys, joka luo kiireellisyyttä. Viestintäkäytäntönä toimivat toimialaraporttien julkistustilaisuudet, ammattilaistapahtuvat (AI &amp; Business Strategies 2026) ja verkkomediat. Kaplanin (2008) termein tämä kehys käy legitimiteettitaistelua tehokkuuskehyksen kanssa: kyse ei ole vain säästöistä, vaan kilpailukyvystä.</div>
+          </div><div style="background:var(--bg-deep); border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--kaplan); margin-bottom:4px;">Algoritmisen johtamisen kehys</div>
+            <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Omistaja: Haaga-Helia (Lahtinen ym. 2026), Itä-Suomen yliopisto</div>
+            <div style="font-size:13px;">Tekoäly ei ole vain työkalu vaan johtamisjärjestelmä, joka jo nyt muuttaa vallan- ja vastuunjakoa. 49 % asiantuntijoista on kohdannut tilanteen, jossa kone johtaa ihmistä (Haaga-Helia 8/2026). Kehys tuo mukaan eettisen ja vastuullisuusulottuvuuden: 83 % johtajista valitsee läpinäkyvän tekoälyn mustan laatikon sijaan. Tämä on Kaplanin (2008) kilpaileva kehys, joka haastaa sekä tehokkuus- että transformaatiokehyksen: teknologian kypsyyttä ei arvioida suorituskyvyn vaan vastuullisuuden dimensiolla (Hoppmann 2020). Kehys elää tietokirjojen, tutkimustiedotteiden ja akateemisten seminaarien viestintäkäytännöissä.</div>
+          </div><div style="background:var(--bg-deep); border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--kaplan); margin-bottom:4px;">Sääntelyn ja riskin kehys</div>
+            <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Omistaja: EU-komissio, Traficom, PwC, CGI, juridinen asiantuntijayhteisö</div>
+            <div style="font-size:13px;">EU AI Act astui täysimääräisesti voimaan 2.8.2026 korkean riskin järjestelmien osalta. Teknologiateollisuuden barometrin (2025) mukaan vain 24 % suomalaisista yrityksistä on aloittanut valmistautumisen. Kehys rakentuu ehdollistamisen taktiikalle (Hoppmann 2020): tekoäly on hyödyllistä, jos ja kun compliance on kunnossa. Kehys resonoi erityisesti HR-, rekrytointi- ja terveydenhuoltosektoreilla. Viestintäkäytäntönä toimivat lakimieskoulutukset, compliancewebinaarit ja viranomaistiedotteet — formaali, kapea kanava, joka ei tavoita operatiivista johtoa.</div>
+          </div></div><div class="analysis-block">Syys 2026:n tekoälyjohtamiskeskustelussa on menossa neljän kehyksen samanaikainen kilpailu, jota Kaplan (2008) kuvaisi legitimiteetin rakentumisena epävarmuuden raaka-aineesta. Epävarmuus on tässä tuplattu: a) tekoälyn strateginen arvo (mittauksista puuttuu kasvu), b) vastuullisuus ja sääntely (AI Act tuli voimaan juuri elokuussa 2026).
+
+Kehysten omistajat puhuvat pääosin ohi toisistaan, koska viestintäkäytännöt ovat siloutuneet: konsulttiraportit tavoittavat ylimmän johdon, tutkimustiedotteet akateemisen yhteisön ja compliance-webinaarit lakiosastot. Kaplanin (2008) kehyksen resonanssi syntyy siitä, mikä kehys tavoittaa päätöksentekijät heidän omissa kontekstuaalisissa viestintätilanteissaan. Tällä hetkellä tehokkuuskehys dominoi johtoryhmätasolla juuri siksi, että se välittyy tuttujen formaattien — talousraporttien ja hallitusmateriaalien — kautta.
+
+Hoppmannin (2020) teknologian kypsyyden ja kehystyksen yhteensopivuuden näkökulmasta: Suomessa käytetään potentiaalin ja nykysuorituskyvyn kehystystä tilanteessa, jossa organisaatioiden kypsyys on hyvin kahtiajakoinen. Tämä aiheuttaa kehystyskatoa: edelläkävijöille tuotantoon skaalauksen kehys on oikea, mutta 50 %:lle arviointivaiheessa oleville yrityksille se on liian edistynyt. Kehityskaaren artikulointi puuttuu lähes kokonaan — kukaan ei rakenna selkeää, vaiheistavaa narratiivia siitä, miten juuri nyt alkuvaiheen organisaatio etenee maturiteettipoluillaan.</div></div>
+    </div><div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">04</span>
+          <span class="section-title">Epävarmuuden vastuullinen ääni</span>
+          <div class="section-lenses"><span class="lens-pill mini-pill pill-1a" style="font-size:10px; padding:2px 8px;">Oppiminen</span><span class="lens-pill mini-pill pill-1b" style="font-size:10px; padding:2px 8px;">Keskijohto</span></div>
+        </div>
+        <span class="section-toggle open">▼</span>
+      </div>
+      <div class="section-body open"><div class="concern-block misread">
+        <div class="concern-label" style="color:var(--warning);">
+          ⚠️ Virheellinen tulkinta havaittu
+        </div>
+        Työterveyslaitos (TTL) nostaa esiin johdonmukaisen huolen, joka on tällä hetkellä vaarassa tulla tulkituksi muutosvastarinnaksi: generatiivisen tekoälyn kokeiluissa 'työn mielekkyys, kognitiivinen ergonomia sekä ihmisen ja koneen sujuva yhteistyö ja järkevä työnjako jäävät helposti paitsioon', korostaa tutkimuspäällikkö Virpi Kalakoski Työterveyslaitoksesta (TTL, 12/2025). TTL on käynnistämässä syksyllä 2026 toista kehittämisvaihetta, jossa tuki räätälöidään eri työpaikkojen todellisiin tilanteisiin.
+
+Samoin Haaga-Helian tutkimustulokset osoittavat, että 83 % johtajista valitsisi mieluummin läpinäkyvän tekoälyn, joka osuu oikeaan 75-prosenttisesti, kuin selittämättömän 'mustan laatikon', jonka tarkkuus olisi 95 % (Helsingin Uutiset, 17.8.2026). Tämä ei ole vastarinta — se on vastuullista huolenpitoa luottamuksesta ja vastuunjaosta.
+
+Liftedin johtoryhmätutkimuksen tulos, jonka mukaan yli puolet johtoryhmien jäsenistä ei pidä tekoälyä osana yhteistä työskentelyä, on helppo kehystää 'johtoryhmät eivät pysy vauhdissa' -narratiivilla (Salkunrakentaja 16.5.2026). Tämä kehystys on ongelmallinen, koska se sekoittaa kaksi eri asiaa: a) tietoisen valinnan pitää tekoäly erillään johtoryhmätyöstä (varovaisuus), b) tietämättömyyden tai välinpitämättömyyden.
+
+Kriittinen tulkintaperiaate: Kun organisaatioissa on vain 17 % tekoälyä käyttävistä yrityksistä ohjaava strategia (TTL 1/2026), on täysin rationaalista, että johtoryhmäjäsen pidättäytyy ottamasta tekoälyä osaksi yhteistä työskentelyä ennen kuin pelisäännöt ovat selvillä. Tämä on Ritalan (2024) esteiden tunnistamista — viestintäkäytäntöjä ja rakenteellisia käytäntöjä ei ole rakennettu — ei henkilökohtaista vastarintaa.
+      </div><div class="analysis-block" style="border-left:3px solid var(--success);">
+          <div class="block-label" style="color:var(--success);">Korjattu tulkinta</div>
+          Epäileväinen johtoryhmäjäsen, joka kysyy 'mitä vastuullisuus- ja tietosuojakysymyksiä tekoälyn käyttöönotto tuo mukanaan', harjoittaa Floyd &amp; Lanen (2000) mukaista synteesin kokoamista alhaalta ylös — hän estää huonosti valmisteltujen päätösten etenemisen. Tämä on arvokasta organisatorista oppimista (Ritala 2024), ei jarruttamista. Johtamiskulttuurin kannalta on tärkeää, että huolia ei nimetä vastarinnaksi, koska se sulkee auki kriittiset viestintäkäytäntöjen kanavat, joita tarvitaan havaintojen ja kokemusten jakamiseen.
+        </div></div>
+    </div><div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">05</span>
+          <span class="section-title">Heikot signaalit</span>
+          <div class="section-lenses"><span class="lens-pill mini-pill pill-1a" style="font-size:10px; padding:2px 8px;">Oppiminen</span><span class="lens-pill mini-pill pill-1b" style="font-size:10px; padding:2px 8px;">Keskijohto</span><span class="lens-pill mini-pill pill-2a" style="font-size:10px; padding:2px 8px;">Kehykset</span><span class="lens-pill mini-pill pill-2b" style="font-size:10px; padding:2px 8px;">Teknologia</span></div>
+        </div>
+        <span class="section-toggle open">▼</span>
+      </div>
+      <div class="section-body open"><div><div class="signal-row">
+          <div class="signal-num">01</div>
+          <div>Algoritminen johtaminen normalisoituu — ilman johtamiskulttuurin päivitystä: Haaga-Helian RoboBoss-tutkimus (2/2026) osoittaa, että 49 % suomalaisista asiantuntijoista on jo kohdannut konejohtamisen, mutta vain 17 % yrityksistä on tekoälystrategia (TTL 1/2026). Tämä tarkoittaa, että tekoäly jakaa tehtäviä, arvioi suorituksia ja ohjaa työnkulkuja — ilman että organisaatio on eksplisiittisesti päättänyt siitä tai rakentanut viestintäkäytäntöjä sen hallitsemiseksi. Heikko signaali: lähivuosina vastuu- ja luottamuskysymykset alkavat nousta esiin, kun 'kone teki virheen' -tilanteita kohdataan enenevässä määrin. (Linssi 1a: rakenteelliset esteet; Linssi 1b: sopeutumiskyvyn fasilitoinnin puute)</div>
+        </div><div class="signal-row">
+          <div class="signal-num">02</div>
+          <div>EU AI Act loi uuden viestintäkäytäntöjen arkkitehtuurin — mutta se ei vielä kytke operatiiviseen johtoon: Korkean riskin järjestelmien vaatimukset astuivat voimaan 2.8.2026, mutta Teknologiateollisuuden barometrin (2025) mukaan vain 24 % yrityksistä oli aloittanut valmistautumisen. Compliance-prosessit ovat syntymässä juridis-hallinnollisina viestintäkäytäntöinä (riskiarvioinnit, dokumentaatio, rekisteröinti EU-tietokantaan), mutta ne eivät automaattisesti siirry operatiivisen keskijohdon arkeen. Heikko signaali: syntyy kaksi erillistä tekoälykieltä — compliance-kieli (lakiosasto) ja operatiivinen kieli (tiimit) — joiden välillä merkitystä välittävä keskijohto puuttuu. (Linssi 2a: kehystämiskilpailu sääntelyn ja liiketoiminnan välillä; Linssi 1b: merkityksen välittäminen)</div>
+        </div><div class="signal-row">
+          <div class="signal-num">03</div>
+          <div>Yksi kolmesta suomalaisesta johtajasta uskoo tekoälyn voivan tulevaisuudessa päihittää ihmisen strategisessa suunnittelussa — mutta diskursiivinen kompetenssi tämän käsittelemiseen puuttuu: Haaga-Helian Lahtisen ym. (2026) kevään tutkimus paljastaa, että kolmasosa suomalaisjohtajista pitää tekoälyä potentiaalisesti parempana strategina kuin ihminen (FAIRE DIH, 7/2026). Samaan aikaan Deloitten DIF-tutkimus (6/2026) osoittaa, että hallitukset eivät ole rakentaneet käytäntöjä tämän kysymyksen käsittelyyn. Heikko signaali: organisaatioissa alkaa muodostua epävirallinen jako niihin, jotka delegoivat strategista harkintaa koneelle, ja niihin, jotka eivät — ilman eksplisiittistä yhteistä päätöstä siitä, missä ihminen on välttämätön. Tämä johtaa legitimiteettitaisteluun siitä, kenen strategiaan uskotaan — ihmisjohtajan vai algoritmin. (Linssi 2a: Kaplan 2008, kehystämiskilpailu; Linssi 1b: diskursiivinen kompetenssi)</div>
+        </div></div></div>
+    </div><div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">06</span>
+          <span class="section-title">Lähteet</span>
+          <div class="section-lenses"></div>
+        </div>
+        <span class="section-toggle open">▼</span>
+      </div>
+      <div class="section-body open"><div><div class="source-item">
+          <span class="source-type">Tieteellinen</span>
+          <a href="https://www.sttinfo.fi/tiedote/72236099/kone-johtajana-uusi-tietokirja-paljastaa-miten-tekoaly-on-jo-astunut-suomalaisten-esihenkiloiden-saappaisiin" target="_blank" class="source-link">Haaga-Helia: Kone johtajana – Tekoäly asiantuntija- ja tietotyön johtamisessa (Lahtinen ym. 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Tieteellinen</span>
+          <a href="https://www.eurekalert.org/news-releases/1029621" target="_blank" class="source-link">University of Eastern Finland: AI alters middle managers work (Journal of Service Research, EurekaAlert 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Tieteellinen</span>
+          <a href="https://www.fairedih.fi/en/2026/07/08/when-the-algorithm-joins-the-boardroom-finnish-leaders-weigh-ais-new-role-in-strategy-work/" target="_blank" class="source-link">FAIRE DIH: When the Algorithm Joins the Boardroom – Finnish Leaders Weigh AI's New Role (Lahtinen ym. 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://mb.cision.com/Public/13697/4355209/827a9e9cb7b6e913.pdf" target="_blank" class="source-link">OP Pohjola &amp; Accenture &amp; Noren: Unlocking AI Value in Finnish Organisations (2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://aifinland.fi/wp-content/uploads/2026/04/Nain-Suomi-hyodyntaa-tekoalya-2026.pdf" target="_blank" class="source-link">AI Finland: Näin Suomi hyödyntää tekoälyä 2026 (huhtikuu 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://www.deloitte.com/fi/fi/issues/ai-and-tech/tekoaly-hallitustyossa-2026.html" target="_blank" class="source-link">Deloitte &amp; Directors' Institute Finland: Tekoäly hallitustyössä 2026 (kesäkuu 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://www.ttl.fi/ajankohtaista/uutinen/tekoaly-herattaa-tyopaikoilla-odotuksia-ja-epavarmuutta-uusi-hanke-tarjoaa-tukea-kayttoonottoon" target="_blank" class="source-link">Työterveyslaitos: Tekoäly herättää odotuksia ja epävarmuutta – TTL-hanke tukea käyttöönottoon (2025–2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://www.salkunrakentaja.fi/2026/05/suomalaiset-johtoryhmat-eivat-pysy-tekoalyn-vauhdissa/" target="_blank" class="source-link">Salkunrakentaja: Suomalaiset johtoryhmät eivät pysy tekoälyn vauhdissa – Lifted Suuri johtoryhmätutkimus 2026 (toukokuu 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://www.computerweekly.com/news/366644920/Finland-drives-AI-growth-amid-low-take-up-concerns" target="_blank" class="source-link">Computer Weekly: Finland drives AI growth amid low take-up concerns (kesäkuu 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://www.aisanomat.fi/p/deloitte-state-of-ai-2026-suomalaisyritysten-peilikuva-globaaliin-teko-lymurrokseen" target="_blank" class="source-link">AI Sanomat: Deloitte State of AI 2026 – suomalaisyritysten peilikuva globaaliin tekoälymurrokseen (maaliskuu 2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://startbrain.ai/blog/ai-act-suomi-kattava-opas/" target="_blank" class="source-link">StartBrain: AI Act Suomi – velvoitteet + aikataulu (2026)</a>
+        </div><div class="source-item">
+          <span class="source-type">Ammatillinen</span>
+          <a href="https://oamkjournal.oamk.fi/2026/tekoalykypsyyden-tunnistaminen-vauhdittaa-tekoalyn-hyodyntamista-yrityksissa/" target="_blank" class="source-link">OAMK Journal: Tekoälykypsyyden tunnistaminen vauhdittaa tekoälyn hyödyntämistä yrityksissä (toukokuu 2026)</a>
+        </div></div></div>
+    </div><div style="margin-top:14px; padding:8px 12px; border-radius:8px; background:var(--bg-card2); border:1px solid var(--border); font-size:12px; color:var(--muted);">📦 Cache read: 72&nbsp;169 tokenia luettu cachesta (halvempi kutsu)</div></div>
+
+  </main>
+</div>
+
+<script>
+// ── API Key ──
+function getApiKey() {
+  return document.getElementById('apiKeyInput').value.trim();
+}
+
+const apiKeyInput = document.getElementById('apiKeyInput');
+const apiKeyStatus = document.getElementById('apiKeyStatus');
+
+apiKeyInput.addEventListener('input', () => {
+  const key = apiKeyInput.value.trim();
+  if (key.startsWith('sk-ant-') && key.length > 20) {
+    apiKeyStatus.textContent = '🟢';
+    apiKeyStatus.title = 'Avain asetettu';
+  } else if (key.length > 0) {
+    apiKeyStatus.textContent = '🟡';
+    apiKeyStatus.title = 'Avain näyttää virheelliseltä (pitäisi alkaa sk-ant-)';
+  } else {
+    apiKeyStatus.textContent = '🔴';
+    apiKeyStatus.title = 'Avain puuttuu';
+  }
+});
+
+// ── Tilannepaketit ──
+const situationConfigs = {
+  weekly:  { lenses: ['1a','1b','2a','2b'], label: 'Oppiminen · Keskijohto · Kehykset · Teknologia', mode: 'weekly' },
+  leader:  { lenses: ['1b','2a','2b'],      label: 'Keskijohto · Kehykset · Teknologia',             mode: 'framing' },
+  org:     { lenses: ['1a','1b'],           label: 'Oppiminen · Keskijohto',                         mode: 'case'    },
+  concern: { lenses: ['1b','2a'],           label: 'Keskijohto · Kehykset',                          mode: 'concern' }
+};
+
+let currentSituation = 'weekly';
+let activeLenses = new Set(['1a','1b','2a','2b']);
+let currentMode = 'weekly';
+let lastAnalysis = null;
+
+document.querySelectorAll('.situation-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.situation-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    currentSituation = card.dataset.situation;
+    const cfg = situationConfigs[currentSituation];
+    activeLenses = new Set(cfg.lenses);
+    currentMode = cfg.mode;
+    document.getElementById('activeLensesText').textContent = cfg.label;
+    syncLensUI();
+  });
+});
+
+// ── Synkronoi lens-bar ja sivupalkki tilanteen mukaan ──
+function syncLensUI() {
+  const lensLabels = {
+    '1a': 'Org. oppiminen',
+    '1b': 'Keskijohto',
+    '2a': 'Kilpailevat kehykset',
+    '2b': 'Teknol. kehystäminen'
+  };
+
+  ['1a','1b','2a','2b'].forEach(l => {
+    const isOn = activeLenses.has(l);
+
+    const barPill = document.getElementById(`bar-${l}`);
+    if (barPill) {
+      barPill.classList.toggle('inactive', !isOn);
+      barPill.textContent = isOn ? `✓ ${lensLabels[l]}` : `✗ ${lensLabels[l]}`;
+    }
+
+    const card = document.getElementById(`card-${l}`);
+    if (card) card.classList.toggle('inactive', !isOn);
+  });
+}
+
+// Alustus
+syncLensUI();
+
+// ── Section toggle ──
+function setupSectionToggles() {
+  document.querySelectorAll('.section-header').forEach(hdr => {
+    hdr.addEventListener('click', () => {
+      const body   = hdr.nextElementSibling;
+      const toggle = hdr.querySelector('.section-toggle');
+      body.classList.toggle('open');
+      toggle.classList.toggle('open');
+    });
+  });
+}
+
+// ── Build system prompt DYNAAMISESTI — vain aktiiviset linssit ──
+function buildSystemPrompt(lenses = activeLenses) {
+  const lensDefinitions = {
+    '1a': `LINSSI 1a — Ritala ym. (2024, Technovation): Organisatorinen oppiminen & AI-kyvykkyydet.
+Käsitteet (käytä näitä suomeksi analyysissä): havaintoperäiset laukaisimet, toiminnalliset laukaisimet, viestintäkäytännöt, rakenteelliset käytännöt, uutta etsivä oppiminen, olemassaolevaa hyödyntävä oppiminen, esteet ja mahdollistajat.
+Tunnista: Mitkä tekijät edistävät tai estävät AI-kyvykkyyksien kehittymistä? Onko organisaatio uutta etsivässä vai hyödyntävässä vaiheessa?
+
+VIESTINTÄKÄYTÄNNÖT — KOROTETTU ROOLI:
+Ritalan viestintäkäytännöt (communicative practices) on tässä analyysissa siltalinssi muihin teorioihin. Tunnista aina erikseen:
+- Miten AI-kokemuksia ja -havaintoja jaetaan organisaatiossa (formaalit vs. epäformaalit kanavat)?
+- Miten viestintäkäytännöt mahdollistavat tai estävät oppimisen leviämistä?
+- Missä viestintäkäytännöt kytkeytyvät keskijohdon merkityksen välittämiseen (Floyd & Lane) tai kehystämisstrategioihin (Kaplan, Hoppmann)? Nosta tämä yhteys eksplisiittisesti esiin analyysissa.`,
+
+    '1b': `LINSSI 1b — Floyd & Lane (2000): Keskijohdon strateginen rooli (PÄÄPAINO).
+Käsitteet (käytä näitä suomeksi analyysissä): puolestapuhuminen, synteesin kokoaminen, sopeutumiskyvyn fasilitointi, toimeenpano, merkityksellistäminen, merkityksen välittäminen, aloitteen markkinointi johdolle, diskursiivinen kompetenssi.
+Neljä keskeistä seikkaa:
+- Puolestapuhuminen: Kuka ajaa AI-aloitteita ylöspäin? Mitä kehystämistaktiikoita käytetään?
+- Synteesin kokoaminen: Miten hajanainen AI-tieto koostetaan ymmärrettäväksi?
+- Sopeutumiskyvyn fasilitointi: Miten keskijohto suojelee kokeilutilaa?
+- Toimeenpano: Miten strategiset päätökset muuttuvat arjen käytännöiksi?
+
+Kytkös viestintäkäytäntöihin: Floyd & Lanen merkityksen välittäminen ja merkityksellistäminen ovat käytännössä organisatorisia viestintäkäytäntöjä (Ritala). Tunnista, mitkä konkreettiset viestintätilanteet (palaverit, tiedotteet, epäformaalit keskustelut) toimivat merkityksen välittämisen areenoina.`,
+
+    '2a': `LINSSI 2a — Kaplan (2008, Organization Science): Kilpailevat kehykset.
+Käsitteet (käytä näitä suomeksi analyysissä): kognitiiviset kehykset, kehystämiskilpailu, kehyksen resonanssi, legitimiteettitaistelu, kehyksen uudelleenasemointi, diagnostinen kehys, prognostinen kehys.
+Kaplanin ydinlöydös: epävarmuus on kehystämiskilpailujen raaka-aine. Tunnista kilpailevat kehykset ja niiden omistajat.
+
+Kytkös viestintäkäytäntöihin: kehykset elävät ja kilpailevat viestintäkäytäntöjen kautta (Ritala). Tunnista, missä viestintätilanteissa kehyksiä aktiivisesti rakennetaan — esim. julkiset lausunnot, sisäiset koulutukset, mediahaastattelut.`,
+
+    '2b': `LINSSI 2b — Hoppmann ym. (2020, Research Policy): Teknologian strateginen kehystäminen.
+Käsitteet (käytä näitä suomeksi analyysissä): teknologian strateginen kehystäminen, kehystämisdimensiot (potentiaali, ennuste, nykysuorituskyky, kehityskaari), kehystämistaktiikat (johtopäätös, ehdollistaminen, myönnytys), teknologian kypsyys, sidosryhmien odotukset.
+Tunnista: Mitä dimensioita käytetään? Mikä taktiikka? Vastaako kehystys teknologian kypsyyttä?
+
+Kytkös viestintäkäytäntöihin: kehystämistaktiikat toteutuvat aina jonkin viestintäkäytännön kautta (Ritala). Mikä viestintäkanava tai -tilanne välittää kulloinkin käytettyä taktiikkaa?`
+  };
+
+  const activeLensText = [...lenses].map(l => lensDefinitions[l]).filter(Boolean).join('\n\n');
+
+  // Build only relevant JSON sections based on active lenses
+  const sectionSchemas = [];
+  sectionSchemas.push(`{
+      "id": "spotlight",
+      "title": "Suomalainen Spotlight",
+      "lenses": ${JSON.stringify([...lenses].slice(0,2))},
+      "content": "Analyysi tekstinä...",
+      "concepts": ["käsite1", "käsite2"],
+      "source": {"label": "Lähteen nimi", "url": "https://..."}
+    }`);
+  if (lenses.has('1b')) {
+    sectionSchemas.push(`{
+      "id": "middlemgt",
+      "title": "Keskijohdon kehystämistoimet",
+      "lenses": ["1b"],
+      "floyd_role": "puolestapuhuminen|synteesin kokoaminen|fasilitointi|toimeenpano",
+      "framing_dimensions": ["potentiaali","kehityskaari"],
+      "framing_tactic": "johtopäätös|ehdollistaminen|myönnytys",
+      "content": "Analyysi tekstinä...",
+      "success": true,
+      "success_reason": "Miksi onnistui tai epäonnistui"
+    }`);
+  }
+  if (lenses.has('2a') || lenses.has('2b')) {
+    sectionSchemas.push(`{
+      "id": "framing_radar",
+      "title": "Kilpailevien kehysten -radar",
+      "lenses": ${JSON.stringify([...lenses].filter(l => ['2a','2b'].includes(l)))},
+      "competing_frames": [
+        {"label": "Kehyksen nimi", "owner": "omistaja", "content": "..."}
+      ],
+      "content": "Kokonaisanalyysi..."
+    }`);
+  }
+  sectionSchemas.push(`{
+      "id": "concern",
+      "title": "Epävarmuuden vastuullinen ääni",
+      "lenses": ${JSON.stringify([...lenses].slice(0,2))},
+      "misread_as_resistance": false,
+      "content": "Analyysi...",
+      "correction": "Korjattu tulkinta tarvittaessa"
+    }`);
+  sectionSchemas.push(`{
+      "id": "signals",
+      "title": "Heikot signaalit",
+      "lenses": ${JSON.stringify([...lenses])},
+      "signals": [{"text": "Signaali..."}, {"text": "Signaali..."}, {"text": "Signaali..."}]
+    }`);
+  sectionSchemas.push(`{
+      "id": "sources",
+      "title": "Lähteet",
+      "sources": [
+        {"type": "Tieteellinen", "label": "Nimi", "url": "https://..."},
+        {"type": "Ammatillinen", "label": "Nimi", "url": "https://..."}
+      ]
+    }`);
+
+  const staticPrompt = `Olet asiantuntija-assistentti joka seuraa tekoälyyn liittyvää johtamiskeskustelua.
+
+Sinulla on käytössäsi web-hakutyökalu. Käytä sitä AINA ennen analyysin kirjoittamista hakeaksesi ajantasaista tietoa käsiteltävästä aiheesta, viimeaikaisista uutisista ja suomalaisesta kontekstista. Älä nojaa pelkkään koulutusdataasi, sillä se voi olla vanhentunutta.
+
+AKTIIVISET TEORIALINSSIT (analysoi VAIN näiden kautta):
+${activeLensText}
+
+KRIITTINEN TULKINTAPERIAATE — EPÄVARMUUS ≠ VASTARINTA:
+Epävarmuutta, huolta tai kriittisiä kysymyksiä esittävät ihmiset eivät ole muutosvastarintaisia. He harjoittavat vastuullista huolenpitoa. Merkitse aina kun jokin lähde tai johtaja virheellisesti sekoittaa nämä käsitteet.
+
+SUOMALAINEN KONTEKSTI: TTL (TEIJO-hanke, ALMA-AI), Sitra, HENRY ry, EK, LUT, Aalto, Business Finland, Teknologiateollisuus. Alle 20% tekoälyä käyttävistä yrityksistä on kirjallinen AI-strategia.
+
+VIESTINTÄKÄYTÄNNÖT LINSSIEN SILTANA:
+Ritalan viestintäkäytännöt toimivat analyysissa yhdistävänä käsitteenä: ne ovat se mekanismi, jonka kautta keskijohdon merkityksen välittäminen (Floyd & Lane), kehystämiskilpailut (Kaplan) ja teknologian kehystämistaktiikat (Hoppmann) konkretisoituvat arjessa. Aina kun tunnistat jonkin näistä ilmiöistä, kysy: missä viestintätilanteessa tai -käytännössä tämä tapahtuu?
+
+Kirjoita SUOMEKSI. Sido jokainen havainto konkreettiseen lähteeseen.
+
+Tee tarvittavat verkkohaut ensin. Kun olet valmis, palauta VAIN JSON tässä muodossa (ei hakuvaiheiden selontekoa, ei muuta tekstiä ennen tai jälkeen):
+{
+  "mode": "weekly",
+  "week_label": "Viikko XX/YYYY tai otsikko",
+  "sections": [
+    ${sectionSchemas.join(',\n    ')}
+  ]
+}
+
+Viimeisen vastauksesi on oltava PELKKÄÄ JSON:ia — ei mitään muuta tekstiä.`;
+
+  const todayStr = new Date().toLocaleDateString('fi-FI', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  const dynamicPrompt = `TÄMÄNHETKINEN PÄIVÄMÄÄRÄ: ${todayStr}. Älä arvaa tai oleta päivämäärää — käytä tätä.`;
+
+  // Static osa cache_control-merkittynä (cache write ensimmäisellä kutsulla, cache read seuraavilla,
+  // kunhan aktiiviset linssit eivät muutu). Päivämäärä pidetään ERI lohkossa ilman cache_control-merkintää,
+  // jotta cache-etuliite pysyy samana päivästä toiseen eikä rikkoudu joka päivä vaihtuvasta päivämäärästä.
+  return [
+    { type: 'text', text: staticPrompt, cache_control: { type: 'ephemeral' } },
+    { type: 'text', text: dynamicPrompt }
+  ];
+}
+
+// ── Build user message content blocks (materiaali cachetaan erikseen ohjeista) ──
+function buildUserPrompt(input, mode, lenses) {
+  const modeLabels = {
+    weekly:  'AJANKOHTAISKATSAUS',
+    case:    'TAPAUSANALYYSI',
+    framing: 'KEHYSTÄMISANALYYSI',
+    concern: 'EPÄVARMUUDEN ÄÄNI -ANALYYSI'
+  };
+
+  const lensNames = {
+    '1a': 'Ritala ym. (2024) — Organisatorinen oppiminen',
+    '1b': 'Floyd & Lane (2000) — Keskijohdon roolit',
+    '2a': 'Kaplan (2008) — Framing contests',
+    '2b': 'Hoppmann ym. (2020) — Teknologian kehystäminen'
+  };
+
+  const activeLensStr = [...lenses].map(l => lensNames[l]).join(', ');
+
+  // Materiaalilohko cache_control-merkittynä: jos samaa materiaalia analysoidaan
+  // useaan kertaan (esim. eri linsseillä tai päivän erässä), tämä lohko voidaan
+  // lukea cachesta ensimmäisen kutsun jälkeen (cache write → cache read).
+  const materialBlock = {
+    type: 'text',
+    text: `Materiaali / kysymys:\n${input || '[Ei syötettyä materiaalia — tee katsaus viimeksi esillä olleista teemoista hakemalla relevanttia tietoa]'}`,
+    cache_control: { type: 'ephemeral' }
+  };
+
+  // Ohjelohko pidetään erillään ja ilman cache_control-merkintää, koska se
+  // vaihtelee (linssivalinta, analyysityyppi) kutsusta toiseen.
+  const instructionBlock = {
+    type: 'text',
+    text: `Analysointityyppi: ${modeLabels[mode]}\nAktiiviset linssit: ${activeLensStr}\n\nTuota kattava analyysi JSON-muodossa ohjeiden mukaisesti.`
+  };
+
+  return [materialBlock, instructionBlock];
+}
+
+// ── Render response ──
+function renderResponse(data) {
+  const lensColors = {'1a': 'var(--ritala)', '1b': 'var(--floyd)', '2a': 'var(--kaplan)', '2b': 'var(--hoppmann)'};
+  const lensLabels = {'1a': 'Oppiminen', '1b': 'Keskijohto', '2a': 'Kehykset', '2b': 'Teknologia'};
+  const pillClass  = {'1a': 'pill-1a',   '1b': 'pill-1b',  '2a': 'pill-2a',  '2b': 'pill-2b'};
+  const tagClass   = {'1a': 'tag-1a',    '1b': 'tag-1b',   '2a': 'tag-2a',   '2b': 'tag-2b'};
+
+  let html = `<div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <div>
+      <div style="font-size:18px; font-weight:800;">${data.week_label || 'Analyysi'}</div>
+      <div style="font-size:12px; color:var(--muted); margin-top:2px;">${new Date().toLocaleDateString('fi-FI', {weekday:'long', year:'numeric', month:'long', day:'numeric'})}</div>
+    </div>
+    <button class="factsheet-btn" onclick="generateFactsheet()" id="factsheetBtn2">📄 Vie Factsheet (.docx)</button>
+  </div>`;
+
+  const sectionNums = {
+    spotlight:      '01',
+    middlemgt:      '02',
+    framing_radar:  '03',
+    concern:        '04',
+    signals:        '05',
+    sources:        '06'
+  };
+
+  (data.sections || []).forEach(sec => {
+    const num = sectionNums[sec.id] || '—';
+    const lensesHtml = (sec.lenses || []).map(l =>
+      `<span class="lens-pill mini-pill ${pillClass[l]}" style="font-size:10px; padding:2px 8px;">${lensLabels[l]}</span>`
+    ).join('');
+
+    let bodyHtml = '';
+
+    if (sec.id === 'spotlight') {
+      bodyHtml = `<div class="analysis-block">
+        ${sec.concepts && sec.concepts.length ? `<div style="margin-bottom:10px;">${sec.concepts.map(c => `<span class="concept-tag">${c}</span>`).join(' ')}</div>` : ''}
+        ${sec.content || ''}
+      </div>`;
+      if (sec.source && sec.source.label) {
+        bodyHtml += `<div style="font-size:12px; color:var(--muted); margin-top:6px;">📎 Lähde: <a href="${sec.source.url||'#'}" target="_blank" class="source-link">${sec.source.label}</a></div>`;
+      }
+    }
+
+    else if (sec.id === 'middlemgt') {
+      const roleColors = {'puolestapuhuminen':'var(--floyd)','synteesin kokoaminen':'var(--floyd)','fasilitointi':'var(--floyd)','toimeenpano':'var(--floyd)'};
+      bodyHtml = `
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+          ${sec.floyd_role ? `<div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Rooli keskijohdossa</div><span class="role-badge">${sec.floyd_role}</span></div>` : ''}
+          ${sec.framing_tactic ? `<div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Tapaustaktiikka</div><span class="tactic-badge">${sec.framing_tactic}</span></div>` : ''}
+          ${sec.framing_dimensions && sec.framing_dimensions.length ? `<div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Dimensiot</div><div style="display:flex; gap:4px;">${sec.framing_dimensions.map(d => `<span class="dim-badge">${d}</span>`).join('')}</div></div>` : ''}
+          ${sec.success !== undefined ? `<div><div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px;">Tulos</div><span style="font-size:12px; font-weight:700; padding:3px 9px; border-radius:5px; background:${sec.success ? 'rgba(91,181,122,0.15)' : 'rgba(224,92,92,0.15)'}; color:${sec.success ? 'var(--success)' : 'var(--warning)'};">${sec.success ? '✓ Onnistui' : '✗ Epäonnistui'}</span></div>` : ''}
+        </div>
+        <div class="analysis-block">${sec.content || ''}</div>
+        ${sec.success_reason ? `<div style="font-size:13px; color:var(--muted); font-style:italic; margin-top:8px; padding: 8px 12px; border-left:2px solid var(--border);">${sec.success_reason}</div>` : ''}`;
+    }
+
+    else if (sec.id === 'framing_radar') {
+      if (sec.competing_frames && sec.competing_frames.length) {
+        bodyHtml += `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:10px; margin-bottom:14px;">`;
+        sec.competing_frames.forEach(frame => {
+          bodyHtml += `<div style="background:var(--bg-deep); border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--kaplan); margin-bottom:4px;">${frame.label}</div>
+            ${frame.owner ? `<div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Omistaja: ${frame.owner}</div>` : ''}
+            <div style="font-size:13px;">${frame.content || ''}</div>
+          </div>`;
+        });
+        bodyHtml += `</div>`;
+      }
+      bodyHtml += `<div class="analysis-block">${sec.content || ''}</div>`;
+    }
+
+    else if (sec.id === 'concern') {
+      const isMisread = sec.misread_as_resistance === true;
+      bodyHtml = `<div class="concern-block ${isMisread ? 'misread' : ''}">
+        <div class="concern-label" style="color:${isMisread ? 'var(--warning)' : 'var(--success)'};">
+          ${isMisread ? '⚠️ Virheellinen tulkinta havaittu' : '✓ Legitiimi huoli tunnistettu'}
+        </div>
+        ${sec.content || ''}
+      </div>`;
+      if (isMisread && sec.correction) {
+        bodyHtml += `<div class="analysis-block" style="border-left:3px solid var(--success);">
+          <div class="block-label" style="color:var(--success);">Korjattu tulkinta</div>
+          ${sec.correction}
+        </div>`;
+      }
+    }
+
+    else if (sec.id === 'signals') {
+      bodyHtml = `<div>`;
+      (sec.signals || []).forEach((sig, i) => {
+        bodyHtml += `<div class="signal-row">
+          <div class="signal-num">0${i+1}</div>
+          <div>${sig.text || ''}</div>
+        </div>`;
+      });
+      bodyHtml += `</div>`;
+    }
+
+    else if (sec.id === 'sources') {
+      bodyHtml = `<div>`;
+      (sec.sources || []).forEach(src => {
+        bodyHtml += `<div class="source-item">
+          <span class="source-type">${src.type || 'Lähde'}</span>
+          <a href="${src.url || '#'}" target="_blank" class="source-link">${src.label || src.url}</a>
+        </div>`;
+      });
+      bodyHtml += `</div>`;
+    }
+
+    else {
+      bodyHtml = `<div class="analysis-block">${sec.content || JSON.stringify(sec)}</div>`;
+    }
+
+    // Default open for first few sections
+    const defaultOpen = ['spotlight','middlemgt','framing_radar'].includes(sec.id);
+
+    html += `<div class="section-card">
+      <div class="section-header">
+        <div class="section-meta">
+          <span class="section-num">${num}</span>
+          <span class="section-title">${sec.title}</span>
+          <div class="section-lenses">${lensesHtml}</div>
+        </div>
+        <span class="section-toggle ${defaultOpen ? 'open' : ''}">▼</span>
+      </div>
+      <div class="section-body ${defaultOpen ? 'open' : ''}">${bodyHtml}</div>
+    </div>`;
+  });
+
+  return html;
+}
+
+// ── Robusti JSON-ekstraktori — toimii myös kun malli kirjoittaa tekstiä ennen tai jälkeen JSON:in ──
+function extractJSON(raw, stopReason, maxTokensMsg) {
+  if (stopReason === 'max_tokens') {
+    throw new Error(maxTokensMsg || 'Vastaus katkesi token-rajan takia (max_tokens saavutettu). Yritä lyhyemmällä syötteellä.');
+  }
+  // 1) Kokeile ensin suoraan (jos malli palautti puhdasta JSON:ia tai ```json-blokin)
+  try {
+    const clean = raw.replace(/```json\s*|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch (_) { /* jatka */ }
+  // 2) Etsi ensimmäinen '{' ja viimeinen '}' — leikkaa preambuli ja postambuli pois
+  const start = raw.indexOf('{');
+  const end = raw.lastIndexOf('}');
+  if (start !== -1 && end !== -1 && end > start) {
+    try {
+      return JSON.parse(raw.slice(start, end + 1));
+    } catch (_) { /* jatka */ }
+  }
+  // 3) Kaikki epäonnistui
+  throw new Error('JSON-parsinta epäonnistui. Vastauksen alku: ' + raw.slice(0, 200));
+}
+
+// ── Cache-tilastojen näyttö (läpinäkyvyys: kuinka paljon säästettiin) ──
+function renderCacheStats(usage) {
+  if (!usage) return '';
+  const created = usage.cache_creation_input_tokens || 0;
+  const read = usage.cache_read_input_tokens || 0;
+  if (!created && !read) return '';
+  const label = read > 0
+    ? `📦 Cache read: ${read.toLocaleString('fi-FI')} tokenia luettu cachesta (halvempi kutsu)`
+    : `📦 Cache write: ${created.toLocaleString('fi-FI')} tokenia tallennettu cacheen (seuraavat kutsut halvempia)`;
+  return `<div style="margin-top:14px; padding:8px 12px; border-radius:8px; background:var(--bg-card2); border:1px solid var(--border); font-size:12px; color:var(--muted);">${label}</div>`;
+}
+
+// ── Main run ──
+async function runAnalysis() {
+  const input = document.getElementById('queryInput').value.trim();
+  const runBtn = document.getElementById('runBtn');
+  const responseArea = document.getElementById('responseArea');
+
+  runBtn.disabled = true;
+  runBtn.innerHTML = '<span class="spinner" style="width:18px;height:18px;border-width:2px;margin:0;"></span> Analysoidaan...';
+  responseArea.className = 'response-area visible';
+
+  const steps = [
+    { id:'s1', text:'Haetaan relevantti konteksti teoriakehyksistä...' },
+    { id:'s2', text:'Sovelletaan keskijohdon linssejä...' },
+    { id:'s3', text:'Tunnistetaan kehystämistoimet...' },
+    { id:'s4', text:'Rakennetaan kilpailevien kehysten radar...' },
+    { id:'s5', text:'Muodostetaan viikottainen katsaus...' }
+  ];
+
+  responseArea.innerHTML = `<div class="loading-card">
+    <div class="spinner"></div>
+    <div style="font-size:15px; font-weight:700; margin-bottom:4px;">Analysoidaan teoriakehysten kautta...</div>
+    <div style="font-size:13px; color:var(--muted);">Aktiiviset linssit: ${[...activeLenses].map(l => ({'1a':'Oppiminen','1b':'Keskijohto','2a':'Kehykset','2b':'Teknologia'})[l]).join(', ')}</div>
+    <div class="loading-steps" id="loadingSteps">
+      ${steps.map(s => `<div class="loading-step" id="${s.id}"><span class="step-icon">○</span>${s.text}</div>`).join('')}
+    </div>
+  </div>`;
+
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    responseArea.className = 'response-area visible';
+    responseArea.innerHTML = `<div class="error-card">
+      <div style="font-size:16px; font-weight:700; margin-bottom:8px;">🔑 API-avain puuttuu</div>
+      <div>Syötä Anthropic API-avain oikeaan yläkulmaan ennen analyysin ajamista.<br>Avain alkaa <code style="font-family:monospace; background:rgba(255,255,255,0.1); padding:1px 5px; border-radius:3px;">sk-ant-</code> ja löytyy osoitteesta <a href="https://console.anthropic.com/settings/keys" target="_blank" class="source-link">console.anthropic.com</a>.</div>
+    </div>`;
+    runBtn.disabled = false;
+    runBtn.innerHTML = '<span>▶ Analysoi</span>';
+    return;
+  }
+
+  // Animate steps
+  let stepIdx = 0;
+  const stepInterval = setInterval(() => {
+    if (stepIdx > 0) {
+      const prev = document.getElementById(steps[stepIdx-1].id);
+      if (prev) { prev.classList.add('done'); prev.querySelector('.step-icon').textContent = '✓'; }
+    }
+    if (stepIdx < steps.length) stepIdx++;
+  }, 900);
+
+  try {
+    const messages = [{ role: 'user', content: buildUserPrompt(input, currentMode, activeLenses) }];
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'prompt-caching-2024-07-31',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 8000,
+        system: buildSystemPrompt(),
+        messages,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }]
+      })
+    });
+
+    clearInterval(stepInterval);
+    steps.forEach((s,i) => {
+      const el = document.getElementById(s.id);
+      if (el) { el.classList.add('done'); el.querySelector('.step-icon').textContent = '✓'; }
+    });
+
+    if (!resp.ok) throw new Error(`API-virhe: ${resp.status}`);
+    const data = await resp.json();
+    const textBlocks = data.content.filter(b => b.type === 'text');
+    const raw = textBlocks.length ? textBlocks[textBlocks.length - 1].text : '';
+    const stopReason = data.stop_reason;
+    const parsed = extractJSON(raw, stopReason);
+
+    lastAnalysis = parsed;
+    document.getElementById('globalFactsheetBtn').disabled = false;
+
+    await new Promise(r => setTimeout(r, 400));
+    responseArea.innerHTML = renderResponse(parsed) + renderCacheStats(data.usage);
+    setupSectionToggles();
+
+  } catch(err) {
+    clearInterval(stepInterval);
+    responseArea.innerHTML = `<div class="error-card">
+      <div style="font-size:16px; font-weight:700; margin-bottom:8px;">⚠️ Virhe analyysissä</div>
+      <div>${err.message}</div>
+    </div>`;
+  } finally {
+    runBtn.disabled = false;
+    runBtn.innerHTML = '<span>▶ Analysoi</span>';
+  }
+}
+
+document.getElementById('runBtn').addEventListener('click', runAnalysis);
+
+// ── Factsheet generation ──
+async function generateFactsheet() {
+  if (!lastAnalysis) return;
+
+  const btn = document.getElementById('factsheetBtn2') || document.getElementById('globalFactsheetBtn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Luodaan...'; }
+
+  try {
+  const todayStr = new Date().toLocaleDateString('fi-FI', {day:'numeric', month:'numeric', year:'numeric'});
+
+  // Tiivistetään analyysistä vain oleelliset kentät — ei lähetetä koko JSON:ia
+  const slimAnalysis = (lastAnalysis.sections || []).map(s => ({
+    id: s.id,
+    title: s.title,
+    content: (s.content || '').slice(0, 600),
+    concepts: s.concepts || [],
+    signals: s.signals || [],
+    competing_frames: s.competing_frames || []
+  }));
+
+    const staticInstructions = `Luo tiivistetty ajankohtaiskatsaus annetusta analyysistä. Palauta VAIN JSON tässä muodossa:
+{
+  "title": "Lyhyt, kuvaava otsikko suomeksi — EI aloita sanoilla 'Johtamisviikon' tai vastaavalla. Esim. 'Tekoälyn kustannusrealismi ja kehystämiskilpailu'",
+  "date": "${todayStr}",
+  "sections": [
+    {"heading": "Tilannekuva", "content": "Sisältö täysin suomeksi..."},
+    {"heading": "Strateginen asemoituminen", "content": "..."},
+    {"heading": "Kilpailevat kehykset", "content": "..."},
+    {"heading": "Huolenaiheet", "content": "..."},
+    {"heading": "Heikot signaalit", "content": "..."}
+  ],
+  "key_concepts": ["suomenkielinen termi tai välttämätön lyhenne"],
+  "action_points": ["Toimenpide 1 täysin suomeksi...", "Toimenpide 2...", "Toimenpide 3..."],
+  "sources_page": [
+    {
+      "section": "Tilannekuva",
+      "items": [
+        {"claim": "Väite", "source": "Lähde: tekijä/julkaisu/vuosi", "quote": "Sitaatti tai konkretisointi"}
+      ]
+    }
+  ]
+}
+
+KIRJOITUSOHJEET:
+- Kaikki täysin suomeksi — ei englanninkielisiä teoriatermejä
+- Sallitut: EU AI Act, AI, HR
+- Muunna: kehystäminen (ei framing), kilpailevat kehykset (ei framing contest), ehdollistaminen (ei conditioning), aloitteiden edistäminen (ei championing), tiedon koostaminen (ei synthesizing)
+- sources_page: 2 lähdeviitettä per osio, sitaatit kursiivilla lainausmerkeissä
+- Pidä jokainen content-kenttä tiiviinä, max 3 virkettä`;
+
+    // Analyysidata omassa lohkossaan cache_control-merkittynä — jos samasta analyysistä
+    // luodaan useampi factsheet (esim. uudelleenyritys), tämä lohko voidaan lukea cachesta.
+    const analysisBlock = {
+      type: 'text',
+      text: `${staticInstructions}\n\nAnalyysi:\n${JSON.stringify(slimAnalysis)}`,
+      cache_control: { type: 'ephemeral' }
+    };
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': getApiKey(),
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'prompt-caching-2024-07-31',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 6000,
+        system: `Tämänhetkinen päivämäärä: ${todayStr}. Palauta PELKKÄÄ JSON:ia — ei muuta tekstiä.`,
+        messages: [{ role: 'user', content: [analysisBlock] }]
+      })
+    });
+
+    const data = await resp.json();
+    const textBlocks2 = data.content.filter(b => b.type === 'text');
+    const raw = textBlocks2.length ? textBlocks2[textBlocks2.length - 1].text : '';
+    const stopReason = data.stop_reason;
+    const fs = extractJSON(raw, stopReason, 'Factsheet katkesi token-rajan takia. Yritä uudelleen tai käytä lyhyempää analyysiä.');
+    downloadFactsheetHTML(fs);
+  } catch(err) {
+    alert('Factsheet-virhe: ' + err.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '📄 Vie Factsheet (.docx)'; }
+  }
+}
+
+document.getElementById('globalFactsheetBtn').addEventListener('click', generateFactsheet);
+
+function downloadFactsheetHTML(fs) {
+  const dateStr = new Date().toLocaleDateString('fi-FI', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+  const html = `<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${fs.title || 'Johtamiskatsaus'}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --ink:      #0F1623;
+    --ink2:     #1E2A3A;
+    --surface:  #F5F7FA;
+    --card:     #FFFFFF;
+    --border:   #E2E8F0;
+    --muted:    #64748B;
+    --ritala:   #3B7DD8;
+    --floyd:    #0F9D8A;
+    --kaplan:   #B8860B;
+    --hoppmann: #9B44A8;
+    --accent:   #3B7DD8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── SIVU 1: KANSI ── */
+  .cover {
+    background: linear-gradient(135deg, #0F1623 0%, #1a2744 50%, #0F1623 100%);
+    color: #fff;
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,125,216,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute; bottom: -40px; left: 30%;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-meta {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .cover-meta::before {
+    content: ''; display: inline-block;
+    width: 28px; height: 2px; background: var(--ritala);
+  }
+  .cover h1 {
+    font-size: 32px; font-weight: 900; line-height: 1.15;
+    letter-spacing: -0.5px; margin-bottom: 16px; position: relative;
+  }
+  .cover-date { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+  .lens-strip { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lens-tag {
+    font-size: 11px; font-weight: 700; padding: 4px 12px;
+    border-radius: 20px; border: 1px solid; letter-spacing: 0.3px;
+  }
+  .lt-r { color: #7EB5FF; border-color: rgba(126,181,255,0.4); background: rgba(59,125,216,0.15); }
+  .lt-f { color: #5DD6C8; border-color: rgba(93,214,200,0.4); background: rgba(15,157,138,0.15); }
+  .lt-k { color: #F5C842; border-color: rgba(245,200,66,0.4); background: rgba(212,168,67,0.15); }
+  .lt-h { color: #D87CE8; border-color: rgba(216,124,232,0.4); background: rgba(155,68,168,0.15); }
+
+  /* ── SIVU 1: BODY ── */
+  .body-wrap { max-width: 860px; margin: 0 auto; padding: 40px 40px 20px; }
+
+  .section { margin-bottom: 28px; }
+  .section-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section h2 { font-size: 17px; font-weight: 800; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.2px; }
+  .section p { color: #334155; font-size: 14px; line-height: 1.75; }
+
+  .concept-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .concept-chip {
+    font-size: 12px; font-weight: 600; padding: 5px 13px;
+    border-radius: 20px; background: var(--card);
+    border: 1px solid var(--border); color: var(--ink2);
+  }
+  .concept-chip:nth-child(4n+1) { border-left: 3px solid var(--ritala); }
+  .concept-chip:nth-child(4n+2) { border-left: 3px solid var(--floyd); }
+  .concept-chip:nth-child(4n+3) { border-left: 3px solid var(--kaplan); }
+  .concept-chip:nth-child(4n+0) { border-left: 3px solid var(--hoppmann); }
+
+  .actions-wrap {
+    background: linear-gradient(135deg, #0F1623, #1a2744);
+    border-radius: 12px; padding: 24px 28px; margin-top: 12px; color: #fff;
+  }
+  .action-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .action-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .action-num {
+    font-size: 22px; font-weight: 900; color: var(--ritala);
+    min-width: 28px; line-height: 1.4; opacity: 0.7;
+  }
+  .action-text { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.65; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* ── SIVU 2: LÄHTEET & KONKRETISOINNIT ── */
+  .page-break { page-break-before: always; break-before: page; }
+
+  .sources-cover {
+    background: linear-gradient(135deg, #1a2744 0%, #0F1623 100%);
+    color: #fff;
+    padding: 32px 56px 28px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .sources-cover-icon {
+    font-size: 28px; opacity: 0.7;
+  }
+  .sources-cover h2 {
+    font-size: 20px; font-weight: 800; letter-spacing: -0.3px;
+  }
+  .sources-cover p {
+    font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px;
+  }
+
+  .sources-body { max-width: 860px; margin: 0 auto; padding: 32px 40px 40px; }
+
+  .source-section { margin-bottom: 32px; }
+
+  .source-section-heading {
+    font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .source-section-heading::before {
+    content: ''; display: inline-block;
+    width: 16px; height: 2px; background: var(--accent);
+  }
+
+  .source-item-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .source-item-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--ritala), var(--hoppmann));
+  }
+
+  .source-claim {
+    font-size: 13px; font-weight: 600; color: var(--ink);
+    margin-bottom: 6px; padding-left: 4px;
+  }
+
+  .source-ref {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px; padding-left: 4px;
+  }
+
+  .source-quote {
+    font-size: 13px;
+    font-style: italic;
+    color: #475569;
+    line-height: 1.7;
+    padding: 10px 14px;
+    background: #F8FAFC;
+    border-radius: 6px;
+    border-left: 2px solid var(--border);
+  }
+
+  .source-quote::before { content: '\\201C'; }
+  .source-quote::after  { content: '\\201D'; }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+    padding: 16px 40px;
+    background: var(--ink);
+    color: rgba(255,255,255,0.35);
+    font-size: 11px; letter-spacing: 0.3px;
+  }
+  .footer-brand { font-weight: 700; color: rgba(255,255,255,0.55); }
+
+  @media print {
+    body { background: white; }
+    .cover, .sources-cover, .actions-wrap { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ SIVU 1 ══ -->
+<div class="cover">
+  <div class="cover-meta">Tekoäly &amp; Johtaminen · Ajankohtaiskatsaus</div>
+  <h1>${fs.title || 'Johtamiskatsaus'}</h1>
+  <div class="cover-date">${fs.date || dateStr}</div>
+  <div class="lens-strip">
+    <span class="lens-tag lt-r">Oppiminen</span>
+    <span class="lens-tag lt-f">Keskijohto</span>
+    <span class="lens-tag lt-k">Kilpailevat kehykset</span>
+    <span class="lens-tag lt-h">Teknologian kehystäminen</span>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  ${(fs.sections || []).map((sec, i) => `
+  <div class="section">
+    <div class="section-label">0${i+1}</div>
+    <h2>${sec.heading}</h2>
+    <p>${sec.content}</p>
+  </div>
+  `).join('<hr class="divider">')}
+
+  ${fs.key_concepts && fs.key_concepts.length ? `
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Avaintermit</div>
+    <div class="concept-cloud">
+      ${fs.key_concepts.map(c => `<span class="concept-chip">${c}</span>`).join('')}
+    </div>
+  </div>` : ''}
+
+  ${fs.action_points && fs.action_points.length ? `
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Toimenpide-ehdotukset</div>
+    <div class="actions-wrap">
+      ${fs.action_points.map((a, i) => `
+      <div class="action-item">
+        <div class="action-num">0${i+1}</div>
+        <div class="action-text">${a}</div>
+      </div>`).join('')}
+    </div>
+  </div>` : ''}
+
+</div>
+
+<div class="footer">
+  <span class="footer-brand">Tekoäly &amp; Johtaminen · AI-katsausagentti</span>
+  <span>Luotu ${new Date().toLocaleString('fi-FI')}</span>
+</div>
+
+<!-- ══ SIVU 2: LÄHTEET & KONKRETISOINNIT ══ -->
+${fs.sources_page && fs.sources_page.length ? `
+<div class="page-break">
+  <div class="sources-cover">
+    <div class="sources-cover-icon">📎</div>
+    <div>
+      <h2>Lähteet &amp; konkretisoinnit</h2>
+      <p>Väitteiden taustat, lähdeviitteet ja sitaatit osiottain</p>
+    </div>
+  </div>
+
+  <div class="sources-body">
+    ${fs.sources_page.map(srcSec => `
+    <div class="source-section">
+      <div class="source-section-heading">${srcSec.section}</div>
+      ${(srcSec.items || []).map(item => `
+      <div class="source-item-card">
+        <div class="source-claim">${item.claim}</div>
+        <div class="source-ref">📌 ${item.source}</div>
+        ${item.quote ? `<div class="source-quote">${item.quote}</div>` : ''}
+      </div>`).join('')}
+    </div>`).join('')}
+  </div>
+
+  <div class="footer">
+    <span class="footer-brand">Tekoäly &amp; Johtaminen · AI-katsausagentti</span>
+    <span>Sivu 2 / 2 · ${new Date().toLocaleString('fi-FI')}</span>
+  </div>
+</div>` : ''}
+
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `johtamiskatsaus_${new Date().toISOString().slice(0,10)}.html`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ══════════════════════════════════════════════════════════════
+// ── BATCH API: ei-reaaliaikainen analyysi, yksi erä per päivä ──
+// ══════════════════════════════════════════════════════════════
+
+// Persistointi: localStorage jos saatavilla (esim. itse hostattuna),
+// muuten muistinvarainen fallback (nollautuu sivun uudelleenlatauksessa —
+// tämä koskee erityisesti Claude.ai:n esikatselusandboxia, jossa
+// localStorage on estetty).
+const batchStore = (() => {
+  let memory = {};
+  let usable = false;
+  try {
+    window.localStorage.setItem('__batch_test__', '1');
+    window.localStorage.removeItem('__batch_test__');
+    usable = true;
+  } catch (e) { usable = false; }
+  return {
+    get(key, fallback) {
+      if (usable) {
+        try { const v = window.localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+        catch (e) { return fallback; }
+      }
+      return (key in memory) ? memory[key] : fallback;
+    },
+    set(key, val) {
+      if (usable) {
+        try { window.localStorage.setItem(key, JSON.stringify(val)); return; }
+        catch (e) { /* fall through to memory */ }
+      }
+      memory[key] = val;
+    }
+  };
+})();
+
+function todayKey() {
+  // Paikallinen YYYY-MM-DD, käytetään "yksi erä per päivä" -tarkistukseen.
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+let batchQueue = batchStore.get('batchQueue', []);
+let batchState = batchStore.get('batchState', { batchId: null, dateKey: null, status: null, results: null, itemMeta: null });
+let batchPollTimer = null;
+
+function saveBatchQueue() { batchStore.set('batchQueue', batchQueue); }
+function saveBatchState() { batchStore.set('batchState', batchState); }
+
+function modeLabelShort(mode) {
+  return { weekly:'Viikon katsaus', case:'Organisaatio muuttuu', framing:'Johtaja viestii', concern:'Huoli tai kritiikki' }[mode] || mode;
+}
+
+function queueForBatch() {
+  const input = document.getElementById('queryInput').value.trim();
+  if (!input) { alert('Syötä ensin materiaali tai kysymys ennen erään lisäämistä.'); return; }
+  batchQueue.push({
+    id: 'bq_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+    mode: currentMode,
+    input,
+    lenses: [...activeLenses],
+    addedAt: new Date().toISOString()
+  });
+  saveBatchQueue();
+  document.getElementById('queryInput').value = '';
+  renderBatchPanel();
+}
+
+function removeFromQueue(id) {
+  batchQueue = batchQueue.filter(item => item.id !== id);
+  saveBatchQueue();
+  renderBatchPanel();
+}
+
+function renderBatchPanel() {
+  const panel = document.getElementById('batchPanel');
+  const listEl = document.getElementById('batchQueueList');
+  const submitBtn = document.getElementById('submitBatchBtn');
+  const statusEl = document.getElementById('batchStatusText');
+  const dateLabel = document.getElementById('batchDateLabel');
+  const resultsEl = document.getElementById('batchResultsList');
+
+  const hasQueue = batchQueue.length > 0;
+  const hasActiveBatch = !!batchState.batchId;
+  panel.style.display = (hasQueue || hasActiveBatch) ? 'block' : 'none';
+  if (!hasQueue && !hasActiveBatch) return;
+
+  dateLabel.textContent = todayKey();
+
+  listEl.innerHTML = hasQueue
+    ? batchQueue.map(item => `
+      <div class="batch-queue-item">
+        <span>${modeLabelShort(item.mode)} — "${item.input.slice(0,60).replace(/</g,'&lt;')}${item.input.length>60?'…':''}"</span>
+        <span class="bq-meta">
+          ${item.lenses.length} linssiä
+          <button class="bq-remove" onclick="removeFromQueue('${item.id}')" title="Poista jonosta">✕</button>
+        </span>
+      </div>`).join('')
+    : `<div class="batch-empty-hint">Ei jonotettuja analyyseja. Erä on jo lähetetty tälle päivälle (alla).</div>`;
+
+  const alreadySubmittedToday = batchState.dateKey === todayKey() && batchState.batchId;
+  submitBtn.disabled = !hasQueue || alreadySubmittedToday;
+  submitBtn.textContent = alreadySubmittedToday ? '📤 Erä jo lähetetty tänään' : `📤 Lähetä päivän erä (${batchQueue.length})`;
+
+  if (batchState.batchId) {
+    let statusMsg = '';
+    if (batchState.status === 'in_progress') statusMsg = `⏳ Erä ${batchState.batchId} käsittelyssä...`;
+    else if (batchState.status === 'ended') statusMsg = `✅ Erä ${batchState.batchId} valmis.`;
+    else if (batchState.status === 'error') statusMsg = `⚠️ Virhe erän haussa.`;
+    statusEl.textContent = statusMsg;
+  } else {
+    statusEl.textContent = '';
+  }
+
+  if (batchState.results) {
+    resultsEl.innerHTML = batchState.results.map((r, i) => {
+      const meta = (batchState.itemMeta || [])[i] || {};
+      if (r.error) {
+        return `<div class="batch-result-item errored">
+          <span>${modeLabelShort(meta.mode)} — ${meta.preview || ''}</span>
+          <span class="br-error">Epäonnistui: ${r.error}</span>
+        </div>`;
+      }
+      return `<div class="batch-result-item">
+        <span>${modeLabelShort(meta.mode)} — ${meta.preview || ''}</span>
+        <button class="br-view-btn" onclick="showBatchResult(${i})">Näytä analyysi</button>
+      </div>`;
+    }).join('');
+  } else {
+    resultsEl.innerHTML = '';
+  }
+}
+
+function showBatchResult(index) {
+  const r = batchState.results[index];
+  if (!r || r.error) return;
+  lastAnalysis = r.analysis;
+  document.getElementById('globalFactsheetBtn').disabled = false;
+  const responseArea = document.getElementById('responseArea');
+  responseArea.className = 'response-area visible';
+  responseArea.innerHTML = renderResponse(r.analysis);
+  setupSectionToggles();
+  responseArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function submitDailyBatch() {
+  if (batchQueue.length === 0) return;
+  if (batchState.dateKey === todayKey() && batchState.batchId) {
+    alert('Päivän erä on jo lähetetty. Yksi erä / päivä -sääntö estää toisen lähetyksen tänään. Tarkista tulokset alta, kun erä on valmis.');
+    return;
+  }
+  const apiKey = getApiKey();
+  if (!apiKey) { alert('Syötä API-avain ennen erän lähettämistä.'); return; }
+
+  const submitBtn = document.getElementById('submitBatchBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '📤 Lähetetään...';
+
+  const itemMeta = batchQueue.map(item => ({
+    mode: item.mode,
+    preview: item.input.slice(0,50).replace(/</g,'&lt;') + (item.input.length>50?'…':'')
+  }));
+
+  const requests = batchQueue.map((item, idx) => ({
+    custom_id: `req_${idx}_${item.id}`,
+    params: {
+      model: 'claude-sonnet-4-6',
+      max_tokens: 8000,
+      system: buildSystemPrompt(new Set(item.lenses)),
+      messages: [{ role: 'user', content: buildUserPrompt(item.input, item.mode, new Set(item.lenses)) }],
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }]
+    }
+  }));
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages/batches', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'prompt-caching-2024-07-31,message-batches-2024-09-24',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({ requests })
+    });
+    if (!resp.ok) throw new Error(`Batch-API-virhe: ${resp.status}`);
+    const data = await resp.json();
+
+    batchState = { batchId: data.id, dateKey: todayKey(), status: data.processing_status || 'in_progress', results: null, itemMeta };
+    saveBatchState();
+    batchQueue = [];
+    saveBatchQueue();
+    renderBatchPanel();
+    pollBatchStatus();
+  } catch (err) {
+    alert('Erän lähetys epäonnistui: ' + err.message);
+    submitBtn.disabled = false;
+    renderBatchPanel();
+  }
+}
+
+async function pollBatchStatus() {
+  if (!batchState.batchId || batchState.status === 'ended') return;
+  const apiKey = getApiKey();
+  if (!apiKey) return;
+
+  clearTimeout(batchPollTimer);
+
+  try {
+    const resp = await fetch(`https://api.anthropic.com/v1/messages/batches/${batchState.batchId}`, {
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      }
+    });
+    if (!resp.ok) throw new Error(`Batch-tila-API-virhe: ${resp.status}`);
+    const data = await resp.json();
+    batchState.status = data.processing_status;
+    saveBatchState();
+    renderBatchPanel();
+
+    if (data.processing_status === 'ended') {
+      await fetchBatchResults(data.results_url);
+    } else {
+      batchPollTimer = setTimeout(pollBatchStatus, 30000); // 30s välein — batchit eivät ole reaaliaikaisia
+    }
+  } catch (err) {
+    batchState.status = 'error';
+    saveBatchState();
+    renderBatchPanel();
+  }
+}
+
+async function fetchBatchResults(resultsUrl) {
+  const apiKey = getApiKey();
+  try {
+    const resp = await fetch(resultsUrl, {
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      }
+    });
+    if (!resp.ok) throw new Error(`Tulosten haku epäonnistui: ${resp.status}`);
+    const text = await resp.text();
+    const lines = text.trim().split('\n').filter(Boolean);
+
+    // Tulokset saattavat tulla eri järjestyksessä kuin lähetettiin — järjestetään custom_id:n mukaan.
+    const byCustomId = {};
+    lines.forEach(line => {
+      try {
+        const obj = JSON.parse(line);
+        byCustomId[obj.custom_id] = obj;
+      } catch (e) { /* ohita virheellinen rivi */ }
+    });
+
+    const orderedIds = (batchState.itemMeta || []).map((m, idx) => {
+      // custom_id-muoto on req_{idx}_{itemId}; etsitään vastaava alkuperäinen indeksi
+      return Object.keys(byCustomId).find(cid => cid.startsWith(`req_${idx}_`));
+    });
+
+    const results = orderedIds.map(cid => {
+      const obj = byCustomId[cid];
+      if (!obj || obj.result?.type !== 'succeeded') {
+        return { error: obj?.result?.error?.message || obj?.result?.type || 'tuntematon virhe' };
+      }
+      const content = obj.result.message.content || [];
+      const textBlocks = content.filter(b => b.type === 'text');
+      const raw = textBlocks.length ? textBlocks[textBlocks.length - 1].text : '';
+      try {
+        return { analysis: extractJSON(raw, null) };
+      } catch (e) {
+        return { error: e.message };
+      }
+    });
+
+    batchState.results = results;
+    saveBatchState();
+    renderBatchPanel();
+  } catch (err) {
+    batchState.status = 'error';
+    saveBatchState();
+    renderBatchPanel();
+  }
+}
+
+document.getElementById('batchAddBtn').addEventListener('click', queueForBatch);
+document.getElementById('submitBatchBtn').addEventListener('click', submitDailyBatch);
+renderBatchPanel();
+// Jos edellisen session erä oli vielä kesken, jatka pollausta
+if (batchState.batchId && batchState.status !== 'ended') { pollBatchStatus(); }
+
+// ── Tulostus: avaa kaikki suljetut osiot ennen tulostusta ──
+window.addEventListener('beforeprint', () => {
+  document.querySelectorAll('.section-body').forEach(el => {
+    el.style.display = 'block';
+    el.style.maxHeight = 'none';
+    el.style.overflow = 'visible';
+  });
+});
+window.addEventListener('afterprint', () => {
+  // Palauta alkuperäinen tila (setupSectionToggles asettaa defaultit)
+  document.querySelectorAll('.section-body').forEach(el => {
+    el.style.removeProperty('display');
+    el.style.removeProperty('maxHeight');
+    el.style.removeProperty('overflow');
+  });
+});
+</script>
+
+
+</body></html>
