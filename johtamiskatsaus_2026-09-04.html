@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algoritminen johtaminen arkistuu – kehyskilpailu kiihtyy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --ink:      #0F1623;
+    --ink2:     #1E2A3A;
+    --surface:  #F5F7FA;
+    --card:     #FFFFFF;
+    --border:   #E2E8F0;
+    --muted:    #64748B;
+    --ritala:   #3B7DD8;
+    --floyd:    #0F9D8A;
+    --kaplan:   #B8860B;
+    --hoppmann: #9B44A8;
+    --accent:   #3B7DD8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── SIVU 1: KANSI ── */
+  .cover {
+    background: linear-gradient(135deg, #0F1623 0%, #1a2744 50%, #0F1623 100%);
+    color: #fff;
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,125,216,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: '';
+    position: absolute; bottom: -40px; left: 30%;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-meta {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .cover-meta::before {
+    content: ''; display: inline-block;
+    width: 28px; height: 2px; background: var(--ritala);
+  }
+  .cover h1 {
+    font-size: 32px; font-weight: 900; line-height: 1.15;
+    letter-spacing: -0.5px; margin-bottom: 16px; position: relative;
+  }
+  .cover-date { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+  .lens-strip { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lens-tag {
+    font-size: 11px; font-weight: 700; padding: 4px 12px;
+    border-radius: 20px; border: 1px solid; letter-spacing: 0.3px;
+  }
+  .lt-r { color: #7EB5FF; border-color: rgba(126,181,255,0.4); background: rgba(59,125,216,0.15); }
+  .lt-f { color: #5DD6C8; border-color: rgba(93,214,200,0.4); background: rgba(15,157,138,0.15); }
+  .lt-k { color: #F5C842; border-color: rgba(245,200,66,0.4); background: rgba(212,168,67,0.15); }
+  .lt-h { color: #D87CE8; border-color: rgba(216,124,232,0.4); background: rgba(155,68,168,0.15); }
+
+  /* ── SIVU 1: BODY ── */
+  .body-wrap { max-width: 860px; margin: 0 auto; padding: 40px 40px 20px; }
+
+  .section { margin-bottom: 28px; }
+  .section-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section h2 { font-size: 17px; font-weight: 800; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.2px; }
+  .section p { color: #334155; font-size: 14px; line-height: 1.75; }
+
+  .concept-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .concept-chip {
+    font-size: 12px; font-weight: 600; padding: 5px 13px;
+    border-radius: 20px; background: var(--card);
+    border: 1px solid var(--border); color: var(--ink2);
+  }
+  .concept-chip:nth-child(4n+1) { border-left: 3px solid var(--ritala); }
+  .concept-chip:nth-child(4n+2) { border-left: 3px solid var(--floyd); }
+  .concept-chip:nth-child(4n+3) { border-left: 3px solid var(--kaplan); }
+  .concept-chip:nth-child(4n+0) { border-left: 3px solid var(--hoppmann); }
+
+  .actions-wrap {
+    background: linear-gradient(135deg, #0F1623, #1a2744);
+    border-radius: 12px; padding: 24px 28px; margin-top: 12px; color: #fff;
+  }
+  .action-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .action-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .action-num {
+    font-size: 22px; font-weight: 900; color: var(--ritala);
+    min-width: 28px; line-height: 1.4; opacity: 0.7;
+  }
+  .action-text { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.65; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* ── SIVU 2: LÄHTEET & KONKRETISOINNIT ── */
+  .page-break { page-break-before: always; break-before: page; }
+
+  .sources-cover {
+    background: linear-gradient(135deg, #1a2744 0%, #0F1623 100%);
+    color: #fff;
+    padding: 32px 56px 28px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .sources-cover-icon {
+    font-size: 28px; opacity: 0.7;
+  }
+  .sources-cover h2 {
+    font-size: 20px; font-weight: 800; letter-spacing: -0.3px;
+  }
+  .sources-cover p {
+    font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px;
+  }
+
+  .sources-body { max-width: 860px; margin: 0 auto; padding: 32px 40px 40px; }
+
+  .source-section { margin-bottom: 32px; }
+
+  .source-section-heading {
+    font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .source-section-heading::before {
+    content: ''; display: inline-block;
+    width: 16px; height: 2px; background: var(--accent);
+  }
+
+  .source-item-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .source-item-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--ritala), var(--hoppmann));
+  }
+
+  .source-claim {
+    font-size: 13px; font-weight: 600; color: var(--ink);
+    margin-bottom: 6px; padding-left: 4px;
+  }
+
+  .source-ref {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px; padding-left: 4px;
+  }
+
+  .source-quote {
+    font-size: 13px;
+    font-style: italic;
+    color: #475569;
+    line-height: 1.7;
+    padding: 10px 14px;
+    background: #F8FAFC;
+    border-radius: 6px;
+    border-left: 2px solid var(--border);
+  }
+
+  .source-quote::before { content: '\201C'; }
+  .source-quote::after  { content: '\201D'; }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+    padding: 16px 40px;
+    background: var(--ink);
+    color: rgba(255,255,255,0.35);
+    font-size: 11px; letter-spacing: 0.3px;
+  }
+  .footer-brand { font-weight: 700; color: rgba(255,255,255,0.55); }
+
+  @media print {
+    body { background: white; }
+    .cover, .sources-cover, .actions-wrap { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ SIVU 1 ══ -->
+<div class="cover">
+  <div class="cover-meta">Tekoäly &amp; Johtaminen · Ajankohtaiskatsaus</div>
+  <h1>Algoritminen johtaminen arkistuu – kehyskilpailu kiihtyy</h1>
+  <div class="cover-date">4.9.2026</div>
+  <div class="lens-strip">
+    <span class="lens-tag lt-r">Oppiminen</span>
+    <span class="lens-tag lt-f">Keskijohto</span>
+    <span class="lens-tag lt-k">Kilpailevat kehykset</span>
+    <span class="lens-tag lt-h">Teknologian kehystäminen</span>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  
+  <div class="section">
+    <div class="section-label">01</div>
+    <h2>Tilannekuva</h2>
+    <p>Haaga-Helian elokuussa 2026 julkaisema teos osoittaa, että 49 % suomalaisista tieto- ja asiantuntijatyötä tekevistä on jo kohdannut tilanteen, jossa tekoäly jakaa tehtäviä, arvioi suoritusta tai antaa palautetta ihmisen sijaan. Algoritminen johtaminen ei ole enää tutkijoiden paperien käsite vaan arkipäivää — ilman että organisaatiot ovat eksplisiittisesti päättäneet siitä. Samanaikaisesti EU AI Act astui täysimääräisesti voimaan korkean riskin järjestelmien osalta 2.8.2026, ja vain 24 % suomalaisyrityksistä oli aloittanut valmistautumisen.</p>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">02</div>
+    <h2>Strateginen asemoituminen</h2>
+    <p>OP Pohjola–Accenture–Noren -tutkimus (118 johtajaa, syvähaastattelut 2025–2026) paljastaa rakenteellisen jännitteen: vain 11 % suomalaisyrityksistä hyödyntää tekoälyä strategisesti, kun lähes 89 % epäonnistuu selkeän fokuksen rakentamisessa. Tutkimuksen suositus on selkeä — keskijohto on valtuutettava, hallintoon on investoitava ja kokeilusta on tehtävä toistettavaa. Deloitten DIF-tutkimus (6/2026) täydentää kuvaa: kaksi kolmesta hallituksen jäsenestä tunnistaa tehokkuushyödyt, mutta liiketoiminnan kasvu puuttuu edelleen.</p>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">03</div>
+    <h2>Kilpailevat kehykset</h2>
+    <p>Syys 2026:n tekoälyjohtamiskeskustelussa kilpailee neljä kehystä: tehokkuuskehys (ylin johto, Deloitte), strategisen muutoksen kehys (AI Finland, Demos Helsinki), algoritmisen johtamisen kehys (Haaga-Helia, Itä-Suomen yliopisto) sekä sääntelyn ja riskin kehys (EU-komissio, Traficom, PwC). Kehysten omistajat puhuvat pääosin ohi toisistaan, koska viestintäkäytännöt ovat eriytyneet: konsulttiraportit tavoittavat ylimmän johdon, tutkimustiedotteet akateemikot ja vaatimustenmukaisuuswebinaarit lakiosastot. Merkitystä välittävä keskijohto jää kaikkien kehysten väliin.</p>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">04</div>
+    <h2>Huolenaiheet</h2>
+    <p>Työterveyslaitos varoittaa, että generatiivisen tekoälyn käyttöönotoissa työn mielekkyys, kognitiivinen ergonomia sekä ihmisen ja koneen järkevä työnjako jäävät helposti sivuun. Haaga-Helian tulokset tukevat tätä: 83 % johtajista valitsisi läpinäkyvän tekoälyn mustan laatikon sijaan, mutta käytännön valinnat eivät aina vastaa tätä arvoa. Huolena on, että vastuullisuuspuhe ja operatiiviset päätökset eriytyvät toisistaan.</p>
+  </div>
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">05</div>
+    <h2>Heikot signaalit</h2>
+    <p>Kolme heikkoa signaalia nousee analyysistä: (1) Algoritminen johtaminen normalisoituu ilman johtamiskulttuurin päivitystä — vastuu- ja luottamuskysymykset kärjistyvät, kun 'kone teki virheen' -tilanteet yleistyvät. (2) EU AI Act luo kaksi erillistä tekoälykieltä — vaatimustenmukaisuuskielen ja operatiivisen kielen — joiden välillä keskijohto puuttuu. (3) Kolmasosa suomalaisjohtajista uskoo tekoälyn voivan päihittää ihmisen strategisessa suunnittelussa, mutta yhteinen päätöksentekokäytäntö siitä, missä ihminen on välttämätön, puuttuu.</p>
+  </div>
+  
+
+  
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Avaintermit</div>
+    <div class="concept-cloud">
+      <span class="concept-chip">algoritminen johtaminen</span><span class="concept-chip">kilpailevat kehykset</span><span class="concept-chip">kehystäminen</span><span class="concept-chip">vaatimustenmukaisuus</span><span class="concept-chip">kognitiivinen ergonomia</span><span class="concept-chip">EU AI Act</span><span class="concept-chip">AI</span><span class="concept-chip">HR</span><span class="concept-chip">havaintoperäinen laukaisin</span><span class="concept-chip">diskursiivinen kompetenssi</span>
+    </div>
+  </div>
+
+  
+  <hr class="divider">
+  <div class="section">
+    <div class="section-label">Toimenpide-ehdotukset</div>
+    <div class="actions-wrap">
+      
+      <div class="action-item">
+        <div class="action-num">01</div>
+        <div class="action-text">Kartoita organisaatiossasi, missä tekoäly jo nyt jakaa tehtäviä, arvioi suoritusta tai ohjaa työnkulkuja — ja tee siitä eksplisiittinen johtamispäätös, ei hiljainen oletus.</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">02</div>
+        <div class="action-text">Rakenna keskijohdon viestintäkäytännöt, jotka yhdistävät vaatimustenmukaisuuskielen ja operatiivisen kielen: EU AI Act -velvoitteet eivät saa jäädä pelkästään lakiosaston tietoon.</div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">03</div>
+        <div class="action-text">Määrittele yhdessä, missä päätöksenteon kohdissa ihmisjohtajan läsnäolo on välttämätöntä — ennen kuin epävirallinen jako 'konedelegoijiin' ja 'ihmisjohtajiin' muodostuu itsestään.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-brand">Tekoäly &amp; Johtaminen · AI-katsausagentti</span>
+  <span>Luotu 4.9.2026 klo 16.29.33</span>
+</div>
+
+<!-- ══ SIVU 2: LÄHTEET & KONKRETISOINNIT ══ -->
+
+<div class="page-break">
+  <div class="sources-cover">
+    <div class="sources-cover-icon">📎</div>
+    <div>
+      <h2>Lähteet &amp; konkretisoinnit</h2>
+      <p>Väitteiden taustat, lähdeviitteet ja sitaatit osiottain</p>
+    </div>
+  </div>
+
+  <div class="sources-body">
+    
+    <div class="source-section">
+      <div class="source-section-heading">Tilannekuva</div>
+      
+      <div class="source-item-card">
+        <div class="source-claim">49 % suomalaisista asiantuntijoista on kohdannut konejohtamisen arjessaan</div>
+        <div class="source-ref">📌 Lahtinen, Tuomi, Kauttonen, Vuori & Asikainen / Haaga-Helia 2026; Helsingin Uutiset 17.8.2026</div>
+        <div class="source-quote">*«Jopa 49 % suomalaisista tieto- ja asiantuntijatyötä tekevistä on jo kohdannut tilanteen, jossa tekoäly jakaa työtehtäviä, arvioi suoritusta tai antaa palautetta ihmisen sijaan»*</div>
+      </div>
+      <div class="source-item-card">
+        <div class="source-claim">Vain 24 % suomalaisyrityksistä oli aloittanut EU AI Act -valmistautumisen ennen lain voimaantuloa</div>
+        <div class="source-ref">📌 Teknologiateollisuuden barometri 2025</div>
+        <div class="source-quote">*«Vain 24 % suomalaisista yrityksistä on aloittanut valmistautumisen»* EU AI Actin korkean riskin järjestelmien vaatimuksiin, jotka astuivat voimaan 2.8.2026</div>
+      </div>
+    </div>
+    <div class="source-section">
+      <div class="source-section-heading">Strateginen asemoituminen</div>
+      
+      <div class="source-item-card">
+        <div class="source-claim">Vain 11 % suomalaisyrityksistä käyttää tekoälyä strategisesti</div>
+        <div class="source-ref">📌 OP Pohjola–Accenture–Noren / OP Pohjola 2026 (aineisto 12/2025–3/2026)</div>
+        <div class="source-quote">*«Organisaatioiden tulee empoweroida keskijohto, investoida hallintoon ja prosessien uudelleensuunnitteluun sekä tehdä kokeilusta toistettavaa»*</div>
+      </div>
+      <div class="source-item-card">
+        <div class="source-claim">Kaksi kolmesta hallituksen jäsenestä tunnistaa tehokkuushyödyt, mutta liiketoiminnan kasvu puuttuu</div>
+        <div class="source-ref">📌 Deloitte / DIF-tutkimus, kesäkuu 2026</div>
+        <div class="source-quote">*«Kaksi kolmesta suomalaisesta hallituksen jäsenestä kokee, että organisaatiossa on saavutettu merkittäviä tehokkuushyötyjä — mutta liiketoiminnan kasvu puuttuu»*</div>
+      </div>
+    </div>
+    <div class="source-section">
+      <div class="source-section-heading">Kilpailevat kehykset</div>
+      
+      <div class="source-item-card">
+        <div class="source-claim">Edistyneiden tekoälyyritysten osuus on nelinkertaistunut kahdessa vuodessa</div>
+        <div class="source-ref">📌 AI Finland 2026</div>
+        <div class="source-quote">*«Suomi on ohittanut kokeiluvaiheen — nyt on skaalauksen aika»*; edistyneiden yritysten osuus nelinkertaistunut kahdessa vuodessa</div>
+      </div>
+      <div class="source-item-card">
+        <div class="source-claim">83 % johtajista valitsisi läpinäkyvän tekoälyn mustan laatikon sijaan</div>
+        <div class="source-ref">📌 Lahtinen ym. / Haaga-Helia 2026</div>
+        <div class="source-quote">*«83 % johtajista valitsee läpinäkyvän tekoälyn mustan laatikon sijaan»* — vastuullisuus nousee keskeiseksi teknologian kypsyyden mittariksi</div>
+      </div>
+    </div>
+    <div class="source-section">
+      <div class="source-section-heading">Huolenaiheet</div>
+      
+      <div class="source-item-card">
+        <div class="source-claim">Generatiivisen tekoälyn kokeiluissa työn mielekkyys ja kognitiivinen ergonomia jäävät paitsioon</div>
+        <div class="source-ref">📌 Virpi Kalakoski, tutkimuspäällikkö / Työterveyslaitos TTL, joulukuu 2025</div>
+        <div class="source-quote">*«Työn mielekkyys, kognitiivinen ergonomia sekä ihmisen ja koneen sujuva yhteistyö ja järkevä työnjako jäävät helposti paitsioon»*</div>
+      </div>
+      <div class="source-item-card">
+        <div class="source-claim">TTL käynnistää syksyllä 2026 toisen kehittämisvaiheen, jossa tuki räätälöidään eri työpaikkojen tilanteisiin</div>
+        <div class="source-ref">📌 Työterveyslaitos TTL 2026</div>
+        <div class="source-quote">*«Tuki räätälöidään eri työpaikkojen todellisiin tilanteisiin»* — yleisten suositusten sijaan organisaatiokohtainen lähestymistapa</div>
+      </div>
+    </div>
+    <div class="source-section">
+      <div class="source-section-heading">Heikot signaalit</div>
+      
+      <div class="source-item-card">
+        <div class="source-claim">Kolmasosa suomalaisjohtajista uskoo tekoälyn voivan tulevaisuudessa päihittää ihmisen strategisessa suunnittelussa</div>
+        <div class="source-ref">📌 Lahtinen ym. / Haaga-Helia; FAIRE DIH, heinäkuu 2026</div>
+        <div class="source-quote">*«Kolmasosa suomalaisjohtajista pitää tekoälyä potentiaalisesti parempana strategina kuin ihminen»* — ilman yhteistä päätöksentekokäytäntöä siitä, missä ihminen on välttämätön</div>
+      </div>
+      <div class="source-item-card">
+        <div class="source-claim">EU AI Act luo kaksi erillistä tekoälykieltä — vaatimustenmukaisuuskielen ja operatiivisen kielen</div>
+        <div class="source-ref">📌 Teknologiateollisuuden barometri 2025; EU AI Act voimaantulo 2.8.2026</div>
+        <div class="source-quote">*«Syntyy kaksi erillistä tekoälykieltä — compliance-kieli (lakiosasto) ja operatiivinen kieli (tiimit) — joiden välillä merkitystä välittävä keskijohto puuttuu»*</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-brand">Tekoäly &amp; Johtaminen · AI-katsausagentti</span>
+    <span>Sivu 2 / 2 · 4.9.2026 klo 16.29.33</span>
+  </div>
+</div>
+
+</body>
+</html>
